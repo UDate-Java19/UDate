@@ -6,7 +6,7 @@ Project for the <b>Java 19</b> program at EC-Utbildning, for the course <i>Proje
 <ul>
   <li>Omar Nasser (<a href='https://github.com/Omanas98'>Omanas98</a>)</li>
   <li>Snehal Patel (<a href='https://higtub-com/snehal-pa'>Snehal-pa</a>)</li>
-  <li>Michelle Opanowicz (<a href='https://github.com/Micheili'>Micheili)</a></li>
+  <li>Michelle Opanowicz (<a href='https://github.com/Micheili'>Micheili</a>)</li>
   <li>David Galne (<a href='https://github.com/kitqeb'>Kitqeb</a>)</li>
   <li>Jan-Erik Karlsson (<a href='https://github.com/bitlord69'>BitLord69</a>)</li>
 </ul>
