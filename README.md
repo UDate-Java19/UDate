@@ -18,7 +18,7 @@ Project for the <b>Java 19</b> program at EC-Utbildning, for the course <i>Proje
 </ul>
 
 To set up the IDE with plantUML:
-<img src=bitlord69.se/extra_res/pu_install.png>
+<img src=http://bitlord69.se/extra_res/pu_install.png>
 
 You can download the plantUML language guide here: http://plantuml.com/guide
 
