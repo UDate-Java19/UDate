@@ -18,7 +18,7 @@ Project for the <b>Java 19</b> program at EC-Utbildning, for the course <i>Proje
   <li>To generate UML from Java code, use the iJ-plugin SketchIt</li>
 </ul>
 
-To set up the IDE with plantUML:<br/>
+To set up the IDE with plantUML, go to File/Settings:<br/>
 <img src=http://bitlord69.se/extra_res/pu_install.png height="600px" />
 
 You can download the plantUML language guide here: http://plantuml.com/guide
