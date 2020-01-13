@@ -1,10 +1,24 @@
 package com.udate.fs;
 
-/*
-Programmerat av Jan-Erik "Janis" Karlsson 2020-01-09
-Programmering i Java EMMJUH19, EC-Utbildning
-CopyLeft 2020 - JanInc
-*/
+import java.util.ArrayList;
 
 public class Database {
+    String id;
+    String baseDir;
+    ArrayList<Table> tables;
+
+    public Database (String id, String baseDir){
+        this.id = id;
+        this.baseDir = baseDir;
+
+        // TODO: 2020-01-13 Vi behöver checka om mappar finns och skapa om det behövs
+    }
+
+   /* public boolean addTable(String name){}
+    public boolean removeTable(String name){}
+    public boolean removeTable(Table table){}
+    public void removeAllTables(){}
+    public Table getTable(String table){}
+    public void openTables(){}
+    */
 }
