@@ -1,20 +1,44 @@
 package com.udate.fs;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Database {
-    String id;
-    String baseDir;
-    ArrayList<Table> tables;
+    private String id;
+    private String baseDir;
+    private HashMap<String, Table> tables = new HashMap<>();
 
     public Database (String id, String baseDir){
         this.id = id;
         this.baseDir = baseDir;
-
-        // TODO: 2020-01-13 Vi behöver checka om mappar finns och skapa om det behövs
+        checkCreateFolder();
     }
 
-   /* public boolean addTable(String name){}
+    public String getId() {
+        return id;
+    }
+
+    public String getBaseDir() {
+        return baseDir;
+    }
+
+    public HashMap<String, Table> getTables() {
+        return tables;
+    }
+
+    private void checkCreateFolder(){
+        File folder = new File("./" + id);
+        if (!folder.exists()){
+            folder.mkdir();
+        }
+    }
+
+   public void addTable(String name, Table table){
+        tables.put(name, table);
+   }
+
+   /*
     public boolean removeTable(String name){}
     public boolean removeTable(Table table){}
     public void removeAllTables(){}

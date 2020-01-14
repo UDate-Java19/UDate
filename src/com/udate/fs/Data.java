@@ -1,11 +1,6 @@
 package com.udate.fs;
 
-/*
-Programmerat av Jan-Erik "Janis" Karlsson 2020-01-13
-Programmering i Java EMMJUH19, EC-Utbildning
-CopyLeft 2020 - JanInc
-*/
-
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -17,15 +12,61 @@ import java.util.List;
 
 public class Data {
     private final static String EXTENSION = ".row";
-    private String fileName;
-    public HashMap data;
+
+    private String fileName = "";
+    private HashMap data = new HashMap<String, String>();;
     private String folderName;
-    private ArrayList<Reference> references;
+    private HashMap<String, Reference> references = new HashMap<>();
+
+    public Data() {
+    }
 
     public Data(String folderName){
         this.folderName = folderName;
-        this.fileName = "";
-        data = new HashMap<String, String>();
+    }
+
+    public Data(String folderName, String fileName){
+        this(folderName);
+        if(!folderName.equals(""))
+            this.fileName = String.format("%s/%s", folderName, fileName);
+        else
+            this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public HashMap getData() {
+        return data;
+    }
+
+    public HashMap getResolvedData() {
+
+        HashMap <String, String> newData = (HashMap<String, String>) data.clone();
+
+        data.forEach((k, v) -> {
+            if (references.containsKey(k)) {
+                Reference ref = references.get(k);
+                String[] keyList = newData.get(ref.getKey()).split(",");
+                StringBuilder newList = new StringBuilder();
+                for (String s : keyList){
+                    Data data = ref.getTable().search(ref.getForeignKey(), s).get(0);
+                    newList.append(data.getData().get(ref.getTextKey()));
+                }
+                newData.put(ref.getKey(), newList.toString());
+                
+            }
+        });
+        return newData;
+    }
+
+    public String getFolderName() {
+        return folderName;
+    }
+
+    public HashMap getReferences() {
+        return references;
     }
 
     private void createFileName(){
@@ -67,5 +108,17 @@ public class Data {
         }
         return true;
     }
+
+    public boolean delete() {
+        File file = new File(fileName);
+        System.out.println("data.delete = " + fileName);
+        return file.delete();
+    }
+
+    public void addReference(Reference ref){
+        references.put(ref.getKey(), ref);
+    }
+
+
 }
 

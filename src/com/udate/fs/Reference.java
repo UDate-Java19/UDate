@@ -7,14 +7,16 @@ CopyLeft 2020 - JanInc
 */
 
 public class Reference {
-    Table table;
-    String key;
-    String foreignKey;
+    private Table table;
+    private String key;
+    private String foreignKey;
+    private String textKey;
 
-    public Reference(Table table, String key, String foreignKey){
+    public Reference(Table table, String key, String foreignKey, String textKey){
         this.table = table;
         this.key = key;
         this.foreignKey = foreignKey;
+        this.textKey = textKey;
     }
 
     public Table getTable() {
@@ -27,6 +29,10 @@ public class Reference {
 
     public String getForeignKey() {
         return foreignKey;
+    }
+
+    public String getTextKey() {
+        return textKey;
     }
 
 }
