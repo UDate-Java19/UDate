@@ -7,32 +7,32 @@ CopyLeft 2020 - JanInc
 */
 
 public class Reference {
-    private Table table;
+    private Table refTable;
     private String key;
-    private String foreignKey;
-    private String textKey;
+    private String refKey;
+    private String refTextKey;
 
-    public Reference(Table table, String key, String foreignKey, String textKey){
-        this.table = table;
+    public Reference(Table refTable, String key, String refKey, String refTextKey){
+        this.refTable = refTable;
         this.key = key;
-        this.foreignKey = foreignKey;
-        this.textKey = textKey;
+        this.refKey = refKey;
+        this.refTextKey = refTextKey;
     }
 
-    public Table getTable() {
-        return table;
+    public Table getRefTable() {
+        return refTable;
     }
 
     public String getKey() {
         return key;
     }
 
-    public String getForeignKey() {
-        return foreignKey;
+    public String getRefKey() {
+        return refKey;
     }
 
-    public String getTextKey() {
-        return textKey;
+    public String getRefTextKey() {
+        return refTextKey;
     }
 
 }

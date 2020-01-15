@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,20 +44,30 @@ public class Data {
 
         HashMap <String, String> newData = (HashMap<String, String>) data.clone();
 
-        data.forEach((k, v) -> {
-            if (references.containsKey(k)) {
-                Reference ref = references.get(k);
+        data.forEach((fieldKey, v) -> {
+            if (references.containsKey(fieldKey)) {
+                Reference ref = references.get(fieldKey);
                 String[] keyList = newData.get(ref.getKey()).split(",");
-                StringBuilder newList = new StringBuilder();
-                for (String s : keyList){
-                    Data data = ref.getTable().search(ref.getForeignKey(), s).get(0);
-                    newList.append(data.getData().get(ref.getTextKey()));
-                }
-                newData.put(ref.getKey(), newList.toString());
-                
+
+                String newList = replaceData(ref, keyList);
+                newData.put(ref.getKey(), newList);
             }
         });
         return newData;
+    }
+
+    private String replaceData(Reference ref, String[] keyList) {
+        StringBuilder newList = new StringBuilder();
+
+        for (String s : keyList){
+            Data refData = ref.getRefTable().search(ref.getRefKey(), s).get(0);
+            newList.append(refData.getData().get(ref.getRefTextKey()));
+            newList.append(",");
+        }
+
+        String temp = newList.toString();
+        temp = temp.substring(0,temp.length() - 1);
+        return temp;
     }
 
     public String getFolderName() {

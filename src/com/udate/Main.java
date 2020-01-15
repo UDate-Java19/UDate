@@ -14,22 +14,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        UserTable userTable = new UserTable("hihi");
-        User user = new User("hihi");
-        user.getData().put("name", "peter");
-        user.getData().put("userName", "piddaRabbit");
-        System.out.println(userTable.dataMap.size());
-        userTable.addRecord(user);
-        System.out.println(userTable.dataMap.size());
+//        UserTable userTable = new UserTable("hihi");
+//        User user = new User("hihi");
+//        user.getData().put("name", "peter");
+//        user.getData().put("userName", "piddaRabbit");
+//        System.out.println(userTable.dataMap.size());
+//        userTable.addRecord(user);
+//        System.out.println(userTable.dataMap.size());
         //userTable.deleteRecord(user);
         //System.out.println(userTable.dataList.size());
         //userTable.deleteAll();
         //System.out.println(userTable.dataList.size());
 
-        Set set = userTable.getKeys();
-        System.out.println(set);
-
-
+//        Set set = userTable.getKeys();
+//        System.out.println(set);
 
 //        Data data = new Data("test");
 //        data.data.put("name", "test");
