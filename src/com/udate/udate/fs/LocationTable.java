@@ -1,17 +1,31 @@
 package com.udate.udate.fs;
 
-/*
-Programmerat av Jan-Erik "Janis" Karlsson 2020-01-15
-Programmering i Java EMMJUH19, EC-Utbildning
-CopyLeft 2020 - JanInc
-*/
-
 import com.udate.fs.Data;
 import com.udate.fs.Table;
 
 public class LocationTable extends Table {
-    @Override
-    public Data createDataObject(String folderName, String fileName) {
-        return new Location(folderName, fileName);
+    
+    private final static String LOCATION_TABLE = "location";
+
+    public LocationTable() {
+        super(LOCATION_TABLE);
     }
+
+    public LocationTable(String name) {super(name);
+    }
+
+    @Override
+    public Data createDataObject(String fileName) {
+        return new Location(fileName);
+    }
+
+
+    public void addRecord(String name, String address) {
+        Location location = new Location(this.name);
+        location.getData().put(Location.NAME, name);
+        location.getData().put(Location.ADDRESS, address);
+
+        super.addRecord(location);
+    }
+
 }
