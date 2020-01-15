@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 abstract public class Table {
-    private String name;
-    public HashMap<String, Data> dataMap = new HashMap<>();
+    protected String name;
+    private HashMap<String, Data> dataMap = new HashMap<>();
     private HashMap<String, Reference> references = new HashMap<>();
 
     abstract public Data createDataObject(String folderName, String fileName);
@@ -39,14 +39,14 @@ abstract public class Table {
         }
     }
 
-    private void loadRecords() {
+    public void loadRecords() {
         try (Stream<Path> walk = Files.walk(Paths.get("./" + name))) {
             List<String> result = walk.filter(Files::isRegularFile)
                     .map(x -> x.toString()).collect(Collectors.toList());
 
             result.forEach(fileName -> {
                     Data data = createDataObject("", fileName);
-                System.out.println("i table loadRecords, data.filename = " + data.getFileName() + " ,filename=" + fileName);
+                    System.out.println("i table loadRecords, data.filename = " + data.getFileName() + " ,filename=" + fileName);
                     data.load();
                     this.dataMap.put(data.getFileName(), data);
             });
@@ -102,5 +102,9 @@ abstract public class Table {
 
     public void addReference(Reference ref){
         references.put(ref.getKey(), ref);
+    }
+
+    public HashMap getRecords(){
+        return dataMap;
     }
 }

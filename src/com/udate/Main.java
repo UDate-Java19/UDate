@@ -5,6 +5,9 @@ package com.udate;
 *
 * */
 
+import com.udate.fs.Table;
+import com.udate.udate.fs.Hobby;
+import com.udate.udate.fs.HobbyTable;
 import com.udate.udate.fs.User;
 import com.udate.udate.fs.UserTable;
 
@@ -14,6 +17,14 @@ public class Main {
 
     public static void main(String[] args) {
 
+        UserTable userTable = new UserTable("user");
+        HobbyTable hobbyTable = new HobbyTable("hobby");
+        hobbyTable.addRecord("Cycling", "Vi cyklar en cykel");
+        hobbyTable.addRecord("Fishing", "Vi fiskar fisk");
+        hobbyTable.addRecord("Bowling", "Vi bowlar en boll");
+
+//        hobbyTable.getRecords().forEach((v, k) -> System.out.print(v.toString(), k.toString));
+        //  hobby.getData().put(Hobby.ID, "0");
 //        UserTable userTable = new UserTable("hihi");
 //        User user = new User("hihi");
 //        user.getData().put("name", "peter");

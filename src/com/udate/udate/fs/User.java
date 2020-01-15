@@ -10,7 +10,6 @@ public class User extends Data {
         super(folderName, fileName);
     }
 
-
     public User(String folderName) {
         super(folderName);
     }

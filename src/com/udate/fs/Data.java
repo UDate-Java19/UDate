@@ -66,7 +66,7 @@ public class Data {
         }
 
         String temp = newList.toString();
-        temp = temp.substring(0,temp.length() - 1);
+        temp = temp.substring(0, temp.length() - 1);
         return temp;
     }
 
@@ -80,7 +80,7 @@ public class Data {
 
     private void createFileName(){
         fileName = String.format("%s/%d%s", folderName, System.currentTimeMillis(), EXTENSION);
-        // TODO: 2020-01-13 Se så att filnamn inte redan finns 
+        data.put("id", fileName);
     } //createFileName
 
     public boolean save(){
@@ -127,7 +127,5 @@ public class Data {
     public void addReference(Reference ref){
         references.put(ref.getKey(), ref);
     }
-
-
 }
 
