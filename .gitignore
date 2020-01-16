@@ -1,3 +1,5 @@
-/Inlämningsuppgifter.iml
+﻿/Inlämningsuppgifter.iml
 /.idea/
+*.class
+/.out/
 

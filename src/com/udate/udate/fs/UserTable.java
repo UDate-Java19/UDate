@@ -12,8 +12,8 @@ public class UserTable extends Table {
     }
 
     @Override
-    public Data createDataObject(String folderName, String fileName) {
-        return new User(folderName, fileName);
+    public Data createDataObject(String fileName) {
+        return new User(fileName);
     }
 
     public void addRecord(String name, String username, String address, String city, String zip, String email, String[] hobbies) {

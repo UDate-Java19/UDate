@@ -6,6 +6,7 @@ package com.udate;
 * */
 
 import com.udate.fs.Table;
+import com.udate.udate.UDate;
 import com.udate.udate.fs.Hobby;
 import com.udate.udate.fs.HobbyTable;
 import com.udate.udate.fs.User;
@@ -16,40 +17,9 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
-        // Database.save(new Hobby("Motorcycling"));
 
-        UserTable userTable = new UserTable();
-        HobbyTable hobbyTable = new HobbyTable();
+        UDate udate = new UDate();
+        udate.run();
 
-//        hobbyTable.addRecord(new Hobby("", "", """Cycling", "Vi cyklar en cykel"));
-//        hobbyTable.addRecord("Fishing", "Vi fiskar fisk");
-//        hobbyTable.addRecord("Bowling", "Vi bowlar en boll");
-
-//        hobbyTable.getRecords().forEach((v, k) -> System.out.print(v.toString(), k.toString));
-        //  hobby.getData().put(Hobby.ID, "0");
-//        UserTable userTable = new UserTable("hihi");
-//        User user = new User("hihi");
-//        user.getData().put("name", "peter");
-//        user.getData().put("userName", "piddaRabbit");
-//        System.out.println(userTable.dataMap.size());
-//        userTable.addRecord(user);
-//        System.out.println(userTable.dataMap.size());
-        //userTable.deleteRecord(user);
-        //System.out.println(userTable.dataList.size());
-        //userTable.deleteAll();
-        //System.out.println(userTable.dataList.size());
-
-//        Set set = userTable.getKeys();
-//        System.out.println(set);
-
-//        Data data = new Data("test");
-//        data.data.put("name", "test");
-
-//        if(data.save()){
-//            System.out.println("Noice, it wurked!");
-//        } else System.out.println("It went feri wrung!");
-//        data.data.put("name", "");
-//        data.load();
-//        System.out.println(data.data);
     }
 }

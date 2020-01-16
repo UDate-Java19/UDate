@@ -13,8 +13,8 @@ public class HobbyTable extends Table {
     }
 
     @Override
-    public Data createDataObject(String folderName, String fileName) {
-        return new Hobby(folderName, fileName);
+    public Data createDataObject(String fileName) {
+        return new Hobby(fileName);
     }
 
     public void addRecord(Hobby hobby){

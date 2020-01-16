@@ -86,10 +86,10 @@ public class Data {
     } //createFileName
 
     public boolean save(){
-        if(folderName.equals("")){
+       /* if(folderName.equals("")){
             System.out.println("folderName not set :(");
             return false;
-        }
+        }*/
         if(fileName.equals("")) createFileName();
 
         Path path = Paths.get(fileName);
