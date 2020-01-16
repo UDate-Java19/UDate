@@ -20,15 +20,14 @@ public class Data {
     public Data() {
     }
 
-    public Data(String folderName){
+    public void setFolderName(String folderName) {
         this.folderName = folderName;
     }
 
-    public Data(String folderName, String fileName){
-        this(folderName);
-        if(!folderName.equals(""))
-            this.fileName = String.format("%s/%s", folderName, fileName);
-        else
+    public Data(String fileName){
+        //if(!folderName.equals(""))
+           // this.fileName = String.format("%s/%s", folderName, fileName);
+        //else
             this.fileName = fileName;
     }
 
@@ -40,6 +39,9 @@ public class Data {
         return data;
     }
 
+    public String getID() {
+        return (String)data.get("id");
+    }
     public HashMap getResolvedData() {
 
         HashMap <String, String> newData = (HashMap<String, String>) data.clone();
@@ -84,6 +86,10 @@ public class Data {
     } //createFileName
 
     public boolean save(){
+        if(folderName.equals("")){
+            System.out.println("folderName not set :(");
+            return false;
+        }
         if(fileName.equals("")) createFileName();
 
         Path path = Paths.get(fileName);

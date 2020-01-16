@@ -6,38 +6,24 @@ package com.udate;
 * */
 
 import com.udate.fs.Table;
-import com.udate.udate.fs.*;
+import com.udate.udate.fs.Hobby;
+import com.udate.udate.fs.HobbyTable;
+import com.udate.udate.fs.User;
+import com.udate.udate.fs.UserTable;
 
 import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) {
+        // Database.save(new Hobby("Motorcycling"));
 
-    /*    UserTable userTable = new UserTable("user");
-        HobbyTable hobbyTable = new HobbyTable("hobby");
-        hobbyTable.addRecord("Cycling", "Vi cyklar en cykel");
-        hobbyTable.addRecord("Fishing", "Vi fiskar fisk");
-        hobbyTable.addRecord("Bowling", "Vi bowlar en boll");*/
+        UserTable userTable = new UserTable();
+        HobbyTable hobbyTable = new HobbyTable();
 
-        LocationTable locationTable = new LocationTable("location");
-        locationTable.addRecord("David's car center", "kungsgatan 39, Malmö");
-        locationTable.addRecord("Swedbank stadion", "Stadiongatan 1, Malmö");
-        locationTable.addRecord("Pildammsparken","Malmö");
-        locationTable.addRecord("Kungsparken", "Lund");
-        locationTable.addRecord("Stadsparken", "Helsingborg");
-        locationTable.addRecord("Bulltofta DGC", "Musikvägen, Göteborg");
-        locationTable.addRecord("Brohult DGC", "Låtgatan, Brohult");
-        locationTable.addRecord("Jalla Jalla", "Bergsgatan 3, Malmö");
-        locationTable.addRecord("Ice Bar", "Bergsgatan, Malmö");
-        locationTable.addRecord("Mineral Restaurang", "Stroget 5, Copenhagen");
-        locationTable.addRecord("Bastard", "Carl Hillsgatan 5, Malmö");
-
-
-
-
-
-
+//        hobbyTable.addRecord(new Hobby("", "", """Cycling", "Vi cyklar en cykel"));
+//        hobbyTable.addRecord("Fishing", "Vi fiskar fisk");
+//        hobbyTable.addRecord("Bowling", "Vi bowlar en boll");
 
 //        hobbyTable.getRecords().forEach((v, k) -> System.out.print(v.toString(), k.toString));
         //  hobby.getData().put(Hobby.ID, "0");

@@ -1,5 +1,7 @@
 package com.udate.fs;
 
+import com.udate.udate.fs.User;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,10 +18,7 @@ abstract public class Table {
 
     abstract public Data createDataObject(String fileName);
 
-    public Table() { }
-
     public Table (String name){
-        super();
         this.name = name;
         checkCreateFolder();
 
@@ -39,7 +38,7 @@ abstract public class Table {
         }
     }
 
-    public void loadRecords() {
+    private void loadRecords() {
         try (Stream<Path> walk = Files.walk(Paths.get("./" + name))) {
             List<String> result = walk.filter(Files::isRegularFile)
                     .map(x -> x.toString()).collect(Collectors.toList());
