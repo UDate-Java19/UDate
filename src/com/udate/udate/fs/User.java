@@ -4,6 +4,7 @@ import com.udate.fs.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class User extends Data {
@@ -83,6 +84,11 @@ public class User extends Data {
     public String getHobbies() {
         return (String)getData().get(User.HOBBIES);
     }
+
+//    public String getHobbiesText() {
+//        HashMap rd = getResolvedData(refe);
+//        return (String)getData().get(User.HOBBIES);
+//    }
 
     public String getSex(){
         return (String)getData().get(User.SEX);

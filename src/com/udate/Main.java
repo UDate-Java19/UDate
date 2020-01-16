@@ -8,6 +8,7 @@ package com.udate;
 import com.udate.fs.Data;
 import com.udate.fs.Reference;
 import com.udate.udate.fs.*;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +24,13 @@ public class Main {
         userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
         hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
 
-//        userTable.addRecord(new User( "Carl", "Carlson", "Carl Gatan 1", "Malmö", "222 22",
-//                "Carl@gmail.com", "","Male", "23"));
-//        userTable.addRecord(new User("Johan", "johanson", "Johan Gatan 1", "Svedala", "666 66",
-//                "Johan@gmail.com", "","Female", "19"));
+        if (!userTable.addRecord(new User( "Peter", "Carlson", "Peter Gatan 1", "Malmö", "333 33",
+                "Carl@gmail.com", "","Male", "23")))
+            System.out.println("Hörru, användaren finns redan!!!!");
+
+        if (!userTable.addRecord(new User( "Gösta", "g-man", "Gösatan 1", "Malmö", "333 33",
+                "gosta@gpost.com", "","Male", "58")))
+            System.out.println("Hörru, användaren finns redan!!!!");
 
 //        hobbyTable.addRecord(new Hobby("Go-Cart", "Drive the cart, GOGO!", ""));
 //        hobbyTable.addRecord(new Hobby("Picnic", "Fight the ants!", "location/1579093279714.row"));
@@ -41,7 +45,16 @@ public class Main {
             System.out.println((Data)v + " " + hobbyTable.getResolvedData((Data)v));
         });
 
-//        resolvedData.forEach(System.out::println);
+        users = userTable.search(User.SEX, "Male");
+        System.out.println("Search for Males, found " + users.size());
+        for (Data d : users) System.out.println(d);
+
+        users = userTable.search(User.SEX, "Female");
+        System.out.println("Search for Females, found " + users.size());
+        for (Data d : users) System.out.println(d);
+
+//        Set set = userTable.getKeys();
+//        System.out.println(set);
 
 //        hobbyTable.addRecord(new Hobby("", "", """Cycling", "Vi cyklar en cykel"));
 //        hobbyTable.addRecord("Fishing", "Vi fiskar fisk");
@@ -61,17 +74,5 @@ public class Main {
         //userTable.deleteAll();
         //System.out.println(userTable.dataList.size());
 
-//        Set set = userTable.getKeys();
-//        System.out.println(set);
-
-//        Data data = new Data("test");
-//        data.data.put("name", "test");
-
-//        if(data.save()){
-//            System.out.println("Noice, it wurked!");
-//        } else System.out.println("It went feri wrung!");
-//        data.data.put("name", "");
-//        data.load();
-//        System.out.println(data.data);
     }
 }

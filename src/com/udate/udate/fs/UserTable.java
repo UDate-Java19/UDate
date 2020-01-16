@@ -16,22 +16,21 @@ public class UserTable extends Table {
         return new User(fileName);
     }
 
-    public void addRecord(User user){
-        super.addRecord(user);
+    public boolean userNameExists(String userName){
+        return search(User.USERNAME, userName).size() != 0;
     }
 
-    public void addRecord(String name, String username, String address, String city, String zip, String email, String hobbies, String sex, String age) {
-        User user = new User(this.name, name, username, address, city, zip, email, hobbies, sex, age);
-//        user.getData().put(User.NAME, name);
-//        user.getData().put(User.USERNAME, username);
-//        user.getData().put(User.ADDRESS, address);
-//        user.getData().put(User.CITY, city);
-//        user.getData().put(User.ZIP, zip);
-//        user.getData().put(User.EMAIL, email);
-//
-//        user.getData().put(User.HOBBIES, hobbies);
+    public boolean addRecord(User user){
+        if (userNameExists(user.getUsername()))
+            return false;
+        else
+            super.addRecord(user);
 
-        super.addRecord(user);
+        return true;
+    }
+
+    public boolean addRecord(String name, String username, String address, String city, String zip, String email, String hobbies, String sex, String age) {
+        return addRecord(new User(this.name, name, username, address, city, zip, email, hobbies, sex, age));
     } // addRecord
 }
 
