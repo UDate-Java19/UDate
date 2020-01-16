@@ -1,59 +1,81 @@
 package com.udate.udate;
 
+import com.udate.fs.Data;
 import com.udate.fs.Reference;
 import com.udate.udate.fs.*;
 
 public class UDate {
 
-    private HobbyTable hobbytable;
-    private LocationTable locationtable;
-    private UserTable usertable;
+    private HobbyTable hobbyTable;
+    private LocationTable locationTable;
+    private UserTable userTable;
 
    public UDate(){
        createTables();
    }
 
-
     public void run() {
         addHobbies();
         addLocations();
-        //createReference();
+        createReference();
         addUsers();
         printAllPosts();
+        searchUser();
+        deleteLocation();
+        editHobby();
+        logInUser();
+        logOutUser();
     }
 
     private void createTables() {
-       usertable = new UserTable();
-       locationtable = new LocationTable();
-       hobbytable = new HobbyTable();
+       userTable = new UserTable();
+       locationTable = new LocationTable();
+       hobbyTable = new HobbyTable();
     }
 
     private void addLocations() {
-        locationtable.addRecord("India", "India"); //byt ut sen
-        locationtable.addRecord("Malmö", "in the park");
-        locationtable.addRecord("Palace", "4th street");
-        locationtable.addRecord("Spa", "Åhus");
+        locationTable.addRecord("India", "India"); //byt ut sen
+        locationTable.addRecord("Malmö", "in the park");
+        locationTable.addRecord("Palace", "4th street");
+        locationTable.addRecord("Spa", "Åhus");
     }
 
     private void addHobbies() {
-        hobbytable.addRecord("fishing", "lovely fishing in lake");
-        hobbytable.addRecord("eat out", "lovely romantic dinner");
-        hobbytable.addRecord("cricket", "pildammsparken");
+        hobbyTable.addRecord("fishing", "lovely fishing in lake");
+        hobbyTable.addRecord("eat out", "lovely romantic dinner");
+        hobbyTable.addRecord("cricket", "nice game of cricket");
     }
 
-    //private void createReference() {
-    //    Reference ref = new Reference(hobbytable, );
-    //}
+    private void createReference() {
+        userTable.addReference(new Reference(userTable, User.HOBBIES, Data.ID, Hobby.NAME));
+    }
 
     private void addUsers() {
-       usertable.addRecord("Snehal", "snehalLovesYou", "malmövägen",
-               "malmö", "34567", "snehal@gmail.com", new String[]{"fishing", "cricket"});
-       usertable.addRecord("janis", "janisIsGreat", "lönnvägen",
-               "bjuv", "5678", "janis@awesome.com", new String []{"eat out", "cricket"});
+        userTable.addRecord("Snehal", "snehalLovesYou", "malmövägen",
+                "malmö", "34567", "snehal@gmail.com", " ", "f", "25");
+        userTable.addRecord("Janis", "janisIsGreat", "bjuvvägeen",
+                "bjuv", "34567", "janis@awesome.com", " ", "m", "45");
+
     }
 
     private void printAllPosts() {
-       hobbytable.getRecords();
+       hobbyTable.getRecords();
+    }
+
+    private void searchUser() {
+
+    }
+
+    private void deleteLocation() {
+    }
+
+    private void editHobby() {
+    }
+
+    private void logInUser() {
+    }
+
+    private void logOutUser() {
     }
 
 
