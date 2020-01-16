@@ -16,12 +16,14 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
+        // Database.save(new Hobby("Motorcycling"));
 
-        UserTable userTable = new UserTable("user");
-        HobbyTable hobbyTable = new HobbyTable("hobby");
-        hobbyTable.addRecord("Cycling", "Vi cyklar en cykel");
-        hobbyTable.addRecord("Fishing", "Vi fiskar fisk");
-        hobbyTable.addRecord("Bowling", "Vi bowlar en boll");
+        UserTable userTable = new UserTable();
+        HobbyTable hobbyTable = new HobbyTable();
+
+//        hobbyTable.addRecord(new Hobby("", "", """Cycling", "Vi cyklar en cykel"));
+//        hobbyTable.addRecord("Fishing", "Vi fiskar fisk");
+//        hobbyTable.addRecord("Bowling", "Vi bowlar en boll");
 
 //        hobbyTable.getRecords().forEach((v, k) -> System.out.print(v.toString(), k.toString));
         //  hobby.getData().put(Hobby.ID, "0");
