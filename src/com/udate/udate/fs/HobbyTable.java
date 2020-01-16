@@ -7,14 +7,13 @@ import com.udate.fs.Table;
 public class HobbyTable extends Table {
 
     public final static String TABLE_NAME = "hobby";
-
     public HobbyTable(){
         super(TABLE_NAME);
     }
 
     @Override
-    public Data createDataObject(String folderName, String fileName) {
-        return new Hobby(folderName, fileName);
+    public Data createDataObject(String fileName) {
+        return new Hobby(fileName);
     }
 
     public void addRecord(Hobby hobby){
