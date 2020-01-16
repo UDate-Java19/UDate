@@ -1,19 +1,39 @@
 package com.udate.udate.fs;
 
-/*
-Programmerat av Jan-Erik "Janis" Karlsson 2020-01-15
-Programmering i Java EMMJUH19, EC-Utbildning
-CopyLeft 2020 - JanInc
-*/
-
 import com.udate.fs.Data;
 
 public class Location extends Data {
 
-    public Location(String folderName, String fileName) {
+    public final static String ID = "id";
+    public final static String NAME = "name";
+    public final static String ADDRESS = "address";
+
+    public Location(String fileName) {
+        super(fileName);
     }
 
-    public Location(String folderName) {
-        super(folderName);
+    public void setName(String name){
+        getData().put(Location.NAME, name);
     }
+
+    public void setAddress(String address){
+        getData().put(Location.ADDRESS, address);
+    }
+
+    public String getId() {
+        return (String)getData().get(Location.ID);
+    }
+
+    public String getName() {
+        return (String)getData().get(Location.NAME);
+    }
+
+    public  String getADDRESS() {
+        return (String)getData().get(Location.ADDRESS);
+    }
+
 }
+
+
+
+

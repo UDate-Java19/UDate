@@ -16,7 +16,7 @@ abstract public class Table {
     private HashMap<String, Data> dataMap = new HashMap<>();
     private HashMap<String, Reference> references = new HashMap<>();
 
-    abstract public Data createDataObject(String folderName, String fileName);
+    abstract public Data createDataObject(String fileName);
 
     public Table (String name){
         this.name = name;
@@ -44,7 +44,7 @@ abstract public class Table {
                     .map(x -> x.toString()).collect(Collectors.toList());
 
             result.forEach(fileName -> {
-                    Data data = createDataObject("", fileName);
+                    Data data = createDataObject(fileName);
                     System.out.println("i table loadRecords, data.filename = " + data.getFileName() + " ,filename=" + fileName);
                     data.load();
                     this.dataMap.put(data.getFileName(), data);
