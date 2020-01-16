@@ -7,10 +7,7 @@ package com.udate;
 
 import com.udate.fs.Data;
 import com.udate.fs.Reference;
-import com.udate.udate.fs.Hobby;
-import com.udate.udate.fs.HobbyTable;
-import com.udate.udate.fs.User;
-import com.udate.udate.fs.UserTable;
+import com.udate.udate.fs.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +18,10 @@ public class Main {
 
         UserTable userTable = new UserTable();
         HobbyTable hobbyTable = new HobbyTable();
-        userTable.addReference(new Reference(userTable, User.HOBBIES, Data.ID, User.HOBBIES));
+        LocationTable locationTable = new LocationTable();
+
+        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
+        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
 
 //        userTable.addRecord(new User( "Carl", "Carlson", "Carl Gatan 1", "Malmö", "222 22",
 //                "Carl@gmail.com", "","Male", "23"));
@@ -32,9 +32,15 @@ public class Main {
 //        hobbyTable.addRecord(new Hobby("Picnic", "Fight the ants!", "location/1579093279714.row"));
 
         ArrayList<Data> users = userTable.search(User.NAME, "Johan");
-        System.out.println("Search, found " + users.size() + " record(s)");
-        HashMap resolvedData = users.get(0).getResolvedData();
+        System.out.println("Search, found " + users.size() + " record(s) : " + users.get(0));
+
+        HashMap resolvedData = userTable.getResolvedData(users.get(0));
         System.out.println(resolvedData);
+
+        hobbyTable.getRecords().forEach((k, v) -> {
+            System.out.println((Data)v + " " + hobbyTable.getResolvedData((Data)v));
+        });
+
 //        resolvedData.forEach(System.out::println);
 
 //        hobbyTable.addRecord(new Hobby("", "", """Cycling", "Vi cyklar en cykel"));
