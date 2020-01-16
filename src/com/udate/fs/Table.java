@@ -110,4 +110,8 @@ abstract public class Table {
     public String getName() {
         return name;
     }
+
+    public HashMap getResolvedData(Data data){
+        return data.getResolvedData(references);
+    }
 }

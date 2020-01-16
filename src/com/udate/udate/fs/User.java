@@ -128,7 +128,7 @@ public class User extends Data {
 
     @Override
     public String toString() {
-        return String.format("User{Username: %s, Name: %s, Sex: %s, Age: %s, Email: &s, Address: %s, City: %s, Zip: %s, Hobbies: %s.}",
+        return String.format("User{Username: %s, Name: %s, Sex: %s, Age: %s, Email: %s, Address: %s, City: %s, Zip: %s, Hobbies: %s.}",
                 getUsername(),getName(), getSex(), getAge(), getEmail(), getAddress(), getCity(), getZip(), getHobbies());
     }
 }
