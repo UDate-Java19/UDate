@@ -1,5 +1,7 @@
 package com.udate.fs;
 
+import com.udate.udate.fs.User;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -10,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Data {
+    public final static String ID = "id";
     private final static String EXTENSION = ".row";
 
     private String fileName = "";
@@ -17,18 +20,18 @@ public class Data {
     private String folderName;
     private HashMap<String, Reference> references = new HashMap<>();
 
-    public Data() {
+    public Data(String fileName){
+        this.fileName = fileName;
+    }
+    public Data(String folderName, String fileName) {
+        if(folderName.equals(""))
+            this.fileName = fileName;
+        else
+          this.fileName = String.format("%s/%s", folderName, fileName);
     }
 
     public void setFolderName(String folderName) {
         this.folderName = folderName;
-    }
-
-    public Data(String fileName){
-        //if(!folderName.equals(""))
-           // this.fileName = String.format("%s/%s", folderName, fileName);
-        //else
-            this.fileName = fileName;
     }
 
     public String getFileName() {
@@ -40,8 +43,9 @@ public class Data {
     }
 
     public String getID() {
-        return (String)data.get("id");
+        return (String)data.get(ID);
     }
+
     public HashMap getResolvedData() {
 
         HashMap <String, String> newData = (HashMap<String, String>) data.clone();
@@ -80,9 +84,13 @@ public class Data {
         return references;
     }
 
+    public String getId(){
+        return (String)data.get(ID);
+    }
+
     private void createFileName(){
         fileName = String.format("%s/%d%s", folderName, System.currentTimeMillis(), EXTENSION);
-        data.put("id", fileName);
+        data.put(ID, fileName);
     } //createFileName
 
     public boolean save(){
