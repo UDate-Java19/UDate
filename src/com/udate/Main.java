@@ -25,11 +25,11 @@ public class Main {
         UserTable userTable = new UserTable();
         HobbyTable hobbyTable = new HobbyTable();
         LocationTable locationTable = new LocationTable();
-        UDate udate = new UDate();
-        udate.run();
+        //UDate udate = new UDate();
+        //udate.run();
 
         userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
-        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
+        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.ADDRESS));
 
         if (!userTable.addRecord(new User( "Peter", "Carlson", "Peter Gatan 1", "Malmö", "333 33",
                 "Carl@gmail.com", "","Male", "23")))
@@ -39,14 +39,15 @@ public class Main {
                 "gosta@gpost.com", "","Male", "58")))
             System.out.println("Hörru, användaren finns redan!!!!");
 
-//        hobbyTable.addRecord(new Hobby("Go-Cart", "Drive the cart, GOGO!", ""));
-//        hobbyTable.addRecord(new Hobby("Picnic", "Fight the ants!", "location/1579093279714.row"));
+       hobbyTable.addRecord(new Hobby("Go-Cart", "Drive the cart, GOGO!", ""));
+       hobbyTable.addRecord(new Hobby("Picnic", "Fight the ants!", "location/1579093279714.row"));
 
         ArrayList<Data> users = userTable.search(User.NAME, "Johan");
-        System.out.println("Search, found " + users.size() + " record(s) : " + users.get(0));
-
-        HashMap resolvedData = userTable.getResolvedData(users.get(0));
-        System.out.println(resolvedData);
+        if (users.size() > 0) {
+            System.out.println("Search, found " + users.size() + " record(s) : " + users.get(0));
+            HashMap resolvedData = userTable.getResolvedData(users.get(0));
+            System.out.println(resolvedData);
+        }
 
         hobbyTable.getRecords().forEach((k, v) -> {
             System.out.println((Data)v + " " + hobbyTable.getResolvedData((Data)v));
