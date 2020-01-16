@@ -7,7 +7,6 @@ import com.udate.fs.Table;
 public class HobbyTable extends Table {
 
     public final static String TABLE_NAME = "hobby";
-
     public HobbyTable(){
         super(TABLE_NAME);
     }

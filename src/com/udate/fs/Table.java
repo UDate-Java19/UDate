@@ -1,7 +1,5 @@
 package com.udate.fs;
 
-import com.udate.udate.fs.User;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,10 +24,10 @@ abstract public class Table {
         loadRecords();
     }
 
-    public Table (String name, HashMap references, Database db){
-        this(name);
-        this.references = references;
-    }
+//    public Table (String name, HashMap references, Database db){
+//        this(name);
+//        this.references = references;
+//    }
 
     private void checkCreateFolder(){
         File folder = new File("./" + name);
@@ -45,6 +43,7 @@ abstract public class Table {
 
             result.forEach(fileName -> {
                     Data data = createDataObject(fileName);
+                    data.setFolderName(name);
                     System.out.println("i table loadRecords, data.filename = " + data.getFileName() + " ,filename=" + fileName);
                     data.load();
                     this.dataMap.put(data.getFileName(), data);
@@ -70,6 +69,7 @@ abstract public class Table {
     }
 
     public void addRecord(Data data){
+        data.setFolderName(name);
         data.save();
         dataMap.put(data.getFileName(), data);
     }
@@ -105,5 +105,13 @@ abstract public class Table {
 
     public HashMap getRecords(){
         return dataMap;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public HashMap getResolvedData(Data data){
+        return data.getResolvedData(references);
     }
 }

@@ -1,5 +1,7 @@
 package com.udate.fs;
 
+import com.udate.udate.fs.User;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -10,25 +12,25 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Data {
+    public final static String ID = "id";
     private final static String EXTENSION = ".row";
 
     private String fileName = "";
     private HashMap data = new HashMap<String, String>();;
     private String folderName;
-    private HashMap<String, Reference> references = new HashMap<>();
 
-    public Data() {
+    public Data(String fileName){
+        this.fileName = fileName;
+    }
+    public Data(String folderName, String fileName) {
+        if(folderName.equals(""))
+            this.fileName = fileName;
+        else
+          this.fileName = String.format("%s/%s", folderName, fileName);
     }
 
     public void setFolderName(String folderName) {
         this.folderName = folderName;
-    }
-
-    public Data(String fileName){
-        //if(!folderName.equals(""))
-           // this.fileName = String.format("%s/%s", folderName, fileName);
-        //else
-            this.fileName = fileName;
     }
 
     public String getFileName() {
@@ -40,15 +42,16 @@ public class Data {
     }
 
     public String getID() {
-        return (String)data.get("id");
+        return (String)data.get(ID);
     }
-    public HashMap getResolvedData() {
+
+    public HashMap getResolvedData(HashMap references) {
 
         HashMap <String, String> newData = (HashMap<String, String>) data.clone();
 
         data.forEach((fieldKey, v) -> {
             if (references.containsKey(fieldKey)) {
-                Reference ref = references.get(fieldKey);
+                Reference ref = (Reference)references.get(fieldKey);
                 String[] keyList = newData.get(ref.getKey()).split(",");
 
                 String newList = replaceData(ref, keyList);
@@ -76,13 +79,13 @@ public class Data {
         return folderName;
     }
 
-    public HashMap getReferences() {
-        return references;
+    public String getId(){
+        return (String)data.get(ID);
     }
 
     private void createFileName(){
         fileName = String.format("%s/%d%s", folderName, System.currentTimeMillis(), EXTENSION);
-        data.put("id", fileName);
+        data.put(ID, fileName);
     } //createFileName
 
     public boolean save(){
@@ -115,7 +118,10 @@ public class Data {
             List<String> list = Files.readAllLines(path, StandardCharsets.UTF_8);
             for (String s : list) {
                 String[] line = s.split("\\|");
-                data.put(line[0], line[1]);
+                if (line.length == 1)
+                    data.put(line[0], "");
+                else
+                    data.put(line[0], line[1]);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,10 +134,6 @@ public class Data {
         File file = new File(fileName);
         System.out.println("data.delete = " + fileName);
         return file.delete();
-    }
-
-    public void addReference(Reference ref){
-        references.put(ref.getKey(), ref);
     }
 }
 
