@@ -51,36 +51,38 @@ public class Data {
 
         data.forEach((fieldKey, v) -> {
             if (references.containsKey(fieldKey)) {
-                Reference ref = (Reference)references.get(fieldKey);
+                Reference ref = (Reference) references.get(fieldKey);
                 String[] keyList = newData.get(ref.getKey()).split(",");
 
-                String newList = replaceData(ref, keyList);
-                newData.put(ref.getKey(), newList);
-            }
+                if (keyList.length > 0)
+                {
+                    String newList = replaceData(ref, keyList);
+                    newData.put(ref.getKey(), newList);
+                } // if keyList...
+            } // if references...
         });
         return newData;
-    }
+    } // getResolvedData
 
     private String replaceData(Reference ref, String[] keyList) {
         StringBuilder newList = new StringBuilder();
 
         for (String s : keyList){
-            Data refData = ref.getRefTable().search(ref.getRefKey(), s).get(0);
-            newList.append(refData.getData().get(ref.getRefTextKey()));
-            newList.append(",");
-        }
+            if (!s.equals("")){
+                Data refData = ref.getRefTable().search(ref.getRefKey(), s).get(0);
+                newList.append(refData.getData().get(ref.getRefTextKey()));
+                newList.append(",");
+            } // if !s...
+        } // for s...
 
         String temp = newList.toString();
-        temp = temp.substring(0, temp.length() - 1);
+        if (temp.length() > 0)
+            temp = temp.substring(0, temp.length() - 1);
         return temp;
-    }
+    } // replaceData
 
     public String getFolderName() {
         return folderName;
-    }
-
-    public String getId(){
-        return (String)data.get(ID);
     }
 
     private void createFileName(){
