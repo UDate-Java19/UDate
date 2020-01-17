@@ -55,7 +55,7 @@ abstract public class Table {
     }
 
     public boolean deleteRecord(Data data){
-        dataMap.remove(data);
+        dataMap.remove(data.getID());
         return data.delete();
     }
 
