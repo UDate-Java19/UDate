@@ -1,6 +1,10 @@
-package com.udate.udate.fs;
+package com.udate.udate;
 
 import com.udate.fs.Data;
+import com.udate.udate.fs.HobbyTable;
+import com.udate.udate.fs.LocationTable;
+import com.udate.udate.fs.User;
+import com.udate.udate.fs.UserTable;
 
 import java.util.*;
 
