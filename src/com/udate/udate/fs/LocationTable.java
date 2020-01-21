@@ -5,10 +5,10 @@ import com.udate.fs.Table;
 
 public class LocationTable extends Table {
     
-    private final static String LOCATION_TABLE = "location";
+    public final static String TABLE_NAME = "location";
 
     public LocationTable() {
-        super(LOCATION_TABLE);
+        super(TABLE_NAME);
     }
 
     public LocationTable(String name) {super(name);

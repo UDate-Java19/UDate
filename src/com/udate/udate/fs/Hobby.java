@@ -20,9 +20,9 @@ public class Hobby extends Data {
 
     List<String> locations = new ArrayList<String>();
 
-    public Hobby(String folderName) {super(folderName); }
+    public Hobby(String fileName) {super(fileName); }
 
-    public Hobby(String folderName, String fileName) {super(folderName, fileName); }
+//    public Hobby(String folderName, String fileName) {super(folderName, fileName); }
 
     public Hobby(String name, String description, String locations){
         this("", name, description, locations);
@@ -34,6 +34,11 @@ public class Hobby extends Data {
         setDescription(description);
         setLocations(locations);
     }
+
+    @Override
+    public String getFolderName() {
+        return HobbyTable.TABLE_NAME;
+    } // getFolderName
 
     public String getName() {
         return (String)getData().get(Hobby.NAME);
@@ -75,5 +80,5 @@ public class Hobby extends Data {
     public String toString() {
         return String.format("Hobby{Name: %s, Locations: %s, Description: %s.}",
         getName(), getLocations(), getDescription());
-    }
-}
+    } // toString
+}  //class Hobby
