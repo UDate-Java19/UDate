@@ -29,8 +29,8 @@ public class UserTable extends Table {
         return true;
     }
 
-    public boolean addRecord(String name, String username, String address, String city, String zip, String email, String hobbies, String sex, String age) {
-        return addRecord(new User(this.name, name, username, address, city, zip, email, hobbies, sex, age));
+    public boolean addRecord(String name, String username, String email, String hobbies, String gender, String age) {
+        return addRecord(new User(this.name, name, username, email, hobbies, gender, age));
     } // addRecord
 }
 
