@@ -35,8 +35,8 @@ public class Location extends Data {
 
     @Override
     public String getFolderName() {
-        return HobbyTable.TABLE_NAME;
-    } // getFolderName
+        return LocationTable.TABLE_NAME;
+    }
 
     @Override
     public String toString() {

@@ -38,7 +38,7 @@ public class Hobby extends Data {
     @Override
     public String getFolderName() {
         return HobbyTable.TABLE_NAME;
-    } // getFolderName
+    }
 
     public String getName() {
         return (String)getData().get(Hobby.NAME);
@@ -80,5 +80,5 @@ public class Hobby extends Data {
     public String toString() {
         return String.format("Hobby{Name: %s, Locations: %s, Description: %s.}",
         getName(), getLocations(), getDescription());
-    } // toString
-}  //class Hobby
+    }
+}
