@@ -105,8 +105,8 @@ public class User extends Data {
     public void setHobbies(String hobbies) {
         getData().put(User.HOBBIES, hobbies);
         String[] split = hobbies.split(",");
-        this.hobbies = (ArrayList<String>) Arrays.asList(split);
-    }
+        this.hobbies = new ArrayList<String>(Arrays.asList(split));//(ArrayList<String>) Arrays.asList(split);
+    } // setHobbies
 
     public void setGender(String sex){
         getData().put(User.GENDER, sex);
@@ -118,8 +118,7 @@ public class User extends Data {
 
     @Override
     public String toString() {
-        return String.format("User{Username: %s, Name: %s, Sex: %s, Age: %s, Email: %s, Address: %s, City: %s, Zip: %s, Hobbies: %s.}",
-                getUsername(),getName(), getGender(), getAge(), getEmail(), getCity(), getHobbies());
+        return String.format("User{Username: %s, Name: %s, Sex: %s, Age: %s, Email: %s, City: %s, Hobbies: %s.}",
+                getUsername(), getName(), getGender(), getAge(), getEmail(), getCity(), getHobbies());
     }
-
 }

@@ -22,13 +22,13 @@ public class Main {
 //        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
 //        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
 
-        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Hemgatan 1", "Malmö", "333 33",
+        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Malmö",
                 "johanna@gmail.com", "hobby/1579177328157.row","Male", "44")))
             System.out.println("Hörru, användaren finns redan!!!!");
         else
             System.out.println("Added Kent");
 
-        if (!db.addRecord(new User( "Gösta", "g-man", "Gösatan 1", "Malmö", "333 33",
+        if (!db.addRecord(new User( "Gösta", "g-man", "Malmö",
                 "gosta@gpost.com", "","Male", "58")))
             System.out.println("Hörru, användaren finns redan!!!!");
         else
@@ -53,11 +53,11 @@ public class Main {
             System.out.println(v + " " + db.getResolvedData((Hobby)v));
         });
 
-        users = db.search(UserTable.TABLE_NAME, User.SEX, "Male");
+        users = db.search(UserTable.TABLE_NAME, User.GENDER, "Male");
         System.out.println("Search for Males, found " + users.size());
         for (Data d : users) System.out.println(d);
 
-        users = db.search(UserTable.TABLE_NAME, User.SEX, "Female");
+        users = db.search(UserTable.TABLE_NAME, User.GENDER, "Female");
         System.out.println("Search for Females, found " + users.size());
         for (Data d : users) System.out.println(d);
 
