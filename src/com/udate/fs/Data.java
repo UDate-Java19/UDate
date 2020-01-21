@@ -11,33 +11,35 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
-public class Data {
+public abstract class Data {
     public final static String ID = "id";
     private final static String EXTENSION = ".row";
 
     private String fileName = "";
-    private HashMap data = new HashMap<String, String>();;
-    private String folderName;
+    private HashMap<String, String> data = new HashMap<>();;
+//    private String folderName;
+
+    public abstract String getFolderName();
 
     public Data(String fileName){
-        this.fileName = fileName;
-    }
-    public Data(String folderName, String fileName) {
-        if(folderName.equals(""))
+        if(getFolderName().equals("") || fileName.contains("/") || fileName.contains("\\"))
             this.fileName = fileName;
         else
-          this.fileName = String.format("%s/%s", folderName, fileName);
+            this.fileName = String.format("%s/%s", getFolderName(), fileName);
     }
 
-    public void setFolderName(String folderName) {
-        this.folderName = folderName;
-    }
+//    public Data(String folderName, String fileName) {
+//    } // Data:Data
+
+//    public void setFolderName(String folderName) {
+//        this.folderName = folderName;
+//    }
 
     public String getFileName() {
         return fileName;
     }
 
-    public HashMap getData() {
+    public HashMap<String, String> getData() {
         return data;
     }
 
@@ -45,7 +47,7 @@ public class Data {
         return (String)data.get(ID);
     }
 
-    public HashMap getResolvedData(HashMap references) {
+    public HashMap<String, String> getResolvedData(HashMap references) {
 
         HashMap <String, String> newData = (HashMap<String, String>) data.clone();
 
@@ -81,21 +83,17 @@ public class Data {
         return temp;
     } // replaceData
 
-    public String getFolderName() {
-        return folderName;
-    }
-
     private void createFileName(){
-        fileName = String.format("%s/%d%s", folderName, System.currentTimeMillis(), EXTENSION);
+        fileName = String.format("%s/%d%s", getFolderName(), System.currentTimeMillis(), EXTENSION);
         data.put(ID, fileName);
     } //createFileName
 
     public boolean save(){
-        if(folderName.equals("")){
+        if(getFolderName().equals("")){
             System.out.println("folderName not set :(");
             return false;
         }
-        if(fileName.equals("")) createFileName();
+        if(!fileName.contains(".row")) createFileName();
 
         Path path = Paths.get(fileName);
         StringBuilder output = new StringBuilder();
@@ -109,7 +107,7 @@ public class Data {
             return false;
         }
         return true;
-    }
+    } // save
 
     public boolean load(){
         if(fileName.equals("")){
@@ -130,12 +128,12 @@ public class Data {
             return false;
         }
         return true;
-    }
+    } // load
 
     public boolean delete() {
         File file = new File(fileName);
         System.out.println("data.delete = " + fileName);
         return file.delete();
-    }
-}
+    } // delete
+} // class Data
 
