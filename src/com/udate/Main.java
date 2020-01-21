@@ -6,7 +6,6 @@ package com.udate;
 * */
 
 import com.udate.fs.Data;
-import com.udate.fs.Reference;
 import com.udate.udate.fs.*;
 
 import java.util.ArrayList;
@@ -14,45 +13,51 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Database.save(new Hobby("Motorcycling"));
+        UDateDB db = new UDateDB();
 
-        UserTable userTable = new UserTable();
-        HobbyTable hobbyTable = new HobbyTable();
-        LocationTable locationTable = new LocationTable();
+//        UserTable userTable = new UserTable();
+//        HobbyTable hobbyTable = new HobbyTable();
+//        LocationTable locationTable = new LocationTable();
 
-        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
-        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
+//        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
+//        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
 
-        if (!userTable.addRecord(new User( "Johanna", "Johansson", "Hemgatan 1", "Malmö", "333 33",
-                "johanna@gmail.com", "hobby/1579177328157.row","Female", "49")))
+        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Hemgatan 1", "Malmö", "333 33",
+                "johanna@gmail.com", "hobby/1579177328157.row","Male", "44")))
             System.out.println("Hörru, användaren finns redan!!!!");
+        else
+            System.out.println("Added Kent");
 
-        if (!userTable.addRecord(new User( "Gösta", "g-man", "Gösatan 1", "Malmö", "333 33",
+        if (!db.addRecord(new User( "Gösta", "g-man", "Gösatan 1", "Malmö", "333 33",
                 "gosta@gpost.com", "","Male", "58")))
             System.out.println("Hörru, användaren finns redan!!!!");
+        else
+            System.out.println("Added Gösta");
 
-        ArrayList<Data> users = userTable.search(User.NAME, "Johanna");
+        ArrayList<Data> users = db.search(UserTable.TABLE_NAME, User.NAME, "Johanna");
         if (users.size() > 0) {
             System.out.println("Search, found " + users.size() + " record(s) : " + users.get(0));
 
-            HashMap resolvedData = userTable.getResolvedData(users.get(0));
+            HashMap<String, String> resolvedData = db.getResolvedData((User)users.get(0));
             System.out.println("Hobbies i klartext:  " + resolvedData);
 
-            if (!userTable.deleteRecord(users.get(0)))
-                System.out.println("Det gick inte att radera posten " + users.get(0));
-            else
-                System.out.println("Post raderad!");
+//            if (!db.deleteRecord(users.get(0)))
+//                System.out.println("Det gick inte att radera posten " + users.get(0));
+//            else
+//                System.out.println("Post raderad!");
         } // if users...
+        else
+            System.out.println("Hittade ej Johanna!");
 
-        hobbyTable.getRecords().forEach((k, v) -> {
-            System.out.println((Data)v + " " + hobbyTable.getResolvedData((Data)v));
+        db.getRecords(HobbyTable.TABLE_NAME).forEach((k, v) -> {
+            System.out.println(v + " " + db.getResolvedData((Hobby)v));
         });
 
-        users = userTable.search(User.SEX, "Male");
+        users = db.search(UserTable.TABLE_NAME, User.SEX, "Male");
         System.out.println("Search for Males, found " + users.size());
         for (Data d : users) System.out.println(d);
 
-        users = userTable.search(User.SEX, "Female");
+        users = db.search(UserTable.TABLE_NAME, User.SEX, "Female");
         System.out.println("Search for Females, found " + users.size());
         for (Data d : users) System.out.println(d);
 
@@ -78,6 +83,5 @@ public class Main {
         //System.out.println(userTable.dataList.size());
         //userTable.deleteAll();
         //System.out.println(userTable.dataList.size());
-
     }
 }

@@ -20,19 +20,19 @@ public class UserTable extends Table {
         return search(User.USERNAME, userName).size() != 0;
     }
 
-    public boolean addRecord(User user){
-        if (userNameExists(user.getUsername()))
+    public boolean addRecord(Data user){
+        if (userNameExists(((User)user).getUsername()))
             return false;
         else
             super.addRecord(user);
 
         return true;
-    }
+    } // addRecord
 
     public boolean addRecord(String name, String username, String address, String city, String zip, String email, String hobbies, String sex, String age) {
         return addRecord(new User(this.name, name, username, address, city, zip, email, hobbies, sex, age));
     } // addRecord
-}
+} // UserTable
 
 
 

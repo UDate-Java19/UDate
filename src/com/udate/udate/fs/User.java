@@ -49,8 +49,13 @@ public class User extends Data {
         getData().put(User.HOBBIES, hobbies.toString());
     }
 
-    public User(String folderName) {
-        super(folderName);
+    @Override
+    public String getFolderName() {
+        return UserTable.TABLE_NAME;
+    } // getFolderName
+
+    public User(String fileName) {
+        super(fileName);
     }
 
     public String getName() {
@@ -85,10 +90,9 @@ public class User extends Data {
         return (String)getData().get(User.HOBBIES);
     }
 
-//    public String getHobbiesText() {
-//        HashMap rd = getResolvedData(refe);
-//        return (String)getData().get(User.HOBBIES);
-//    }
+    public List<String> getHobbyList() {
+        return hobbies;
+    } // getHobbyList
 
     public String getSex(){
         return (String)getData().get(User.SEX);
