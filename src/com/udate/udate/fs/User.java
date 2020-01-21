@@ -15,7 +15,7 @@ public class User extends Data {
     public final static String GENDER = "gender";
     public final static String AGE = "age";
 
-    List<String> hobbies = new ArrayList<String>();
+    ArrayList<String> hobbies = new ArrayList<String>();
 
     public User(String name, String userName, String city, String email,
                 String hobbies, String gender, String age) {
@@ -101,7 +101,7 @@ public class User extends Data {
     public void setHobbies(String hobbies) {
         getData().put(User.HOBBIES, hobbies);
         String[] split = hobbies.split(",");
-        this.hobbies = Arrays.asList(split);
+        this.hobbies = (ArrayList<String>) Arrays.asList(split);
     }
 
     public void setGender(String sex){
