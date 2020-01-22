@@ -9,10 +9,6 @@ import java.util.HashMap;
 public class UDateDB extends Database {
     private final static String DBNAME = "UDate";
 
-//    public final static String USERTABLE = "users";
-//    public final static String HOBBYTABLE = "hobbies";
-//    public final static String LOCATIONTABLE = "location";
-
     public UDateDB() {
         super(DBNAME);
 

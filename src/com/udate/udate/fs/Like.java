@@ -8,6 +8,11 @@ public class Like extends Data {
     public final static String LIKED = "liked";
     public final static Boolean LIKESBACK = false;
 
+    @Override
+    public String getFolderName() {
+        return null;
+    }
+
     public Like(String fileName) {super(fileName);
     }
 
