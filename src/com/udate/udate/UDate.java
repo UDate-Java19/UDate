@@ -63,7 +63,6 @@ public class UDate {
     }
 
     private void searchUser() {
-
     }
 
     private void deleteLocation() {
@@ -75,7 +74,9 @@ public class UDate {
     private void logInUser() {
     }
 
-    private void logOutUser() {
+    //Radera och logga ut inloggad användare
+    public void logOutUser() {
+       loggedInUser = null;
     }
 
 
