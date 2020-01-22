@@ -4,13 +4,21 @@ import com.udate.udate.fs.Hobby;
 import com.udate.udate.fs.HobbyTable;
 import com.udate.udate.fs.User;
 import com.udate.udate.fs.UserTable;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+
+class Main {
+    public static void main(String[] args) throws InterruptedException {
+
+        LoadUsers loadUsers = new LoadUsers();
+
+    }
+}
 
 public class LoadUsers {
 
@@ -19,7 +27,7 @@ public class LoadUsers {
 
 
     public LoadUsers() throws InterruptedException {
-        //createHobbies()
+        createHobbies();
         createUsers();
 
     }
@@ -79,11 +87,9 @@ public class LoadUsers {
     }
 
     private String getRandomHobby(){
-        HashMap hobbies = new HashMap();
-        hobbies = hobbyTable.getRecords();
-//        for(Map.Entry<Integer, String> entry : hobbies.entrySet()){
-//            System.out.printf("Key : %s and Value: %s %n", entry.getKey(), entry.getValue());
-//        }
+
+        HashMap hobbies = hobbyTable.getRecords();
+
         ArrayList<String> keys = new ArrayList<>();
 
         hobbies.forEach((key, d) -> {
@@ -91,13 +97,11 @@ public class LoadUsers {
             keys.add((String) key);
 
         });
+
         int index = (int) Math.floor(Math.random() * 7);
         String randomHobby = keys.get(index);
-        return randomHobby;
 
-//        for(int i = 0; i < hobbies.size(); i++){
-//            System.out.println(hobbies.get());
-//        }
+        return randomHobby;
     }
 
 
