@@ -1,12 +1,13 @@
 package com.udate.udate.fs;
 
-import com.udate.fs.Data;
+        import com.udate.fs.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class User extends Data {
+
     public final static String NAME = "name";
     public final static String USERNAME = "username";
     public final static String CITY = "city";
