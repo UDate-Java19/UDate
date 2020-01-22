@@ -5,7 +5,7 @@ public class Like extends Data {
 
     public static final String USER_ID = "id";
     public static final String LIKES_USER_ID = "likedUserId";
-    public static final String LIKED_BACK = "0";
+    public static final String LIKED_BACK = "likedBack";
 
     @Override
     public String getFolderName() {
@@ -20,7 +20,7 @@ public class Like extends Data {
         super(fileName);
         setUserId(userId);
         setLikedUserId(likedUserId);
-        setLikedBack(likesBack);
+        setLikedBack("0");
     }
 
     public void setUserId(String user){ getData().put(Like.USER_ID, user); }
