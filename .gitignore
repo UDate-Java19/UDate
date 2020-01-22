@@ -1,3 +1,9 @@
-/Inlämningsuppgifter.iml
+﻿/Inlämningsuppgifter.iml
 /.idea/
+<<<<<<< HEAD
+*.class
 /.out/
+
+=======
+/.out/
+>>>>>>> Dev
