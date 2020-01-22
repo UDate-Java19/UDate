@@ -7,17 +7,21 @@ public class Like extends Data {
     public static final String LIKES_USER_ID = "likedUserId";
     public static final String LIKED_BACK = "0";
 
+    public Like(String fileName) {
+        super(fileName);
+    }
+
     @Override
     public String getFolderName() {
         return LikeTable.TABLE_NAME;
     }
 
-    public Like(String folderName) {
-        super(folderName);
-    }
-
-    public Like(String fileName) {super(fileName);
-    }
+//    public Like(String folderName) {
+//        super(folderName);
+//    }
+//
+//    public Like(String fileName) {super(fileName);
+//    }
 
     public void setUserId(String user){ getData().put(Like.USER_ID, user); }
 

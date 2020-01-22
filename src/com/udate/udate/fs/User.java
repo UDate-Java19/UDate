@@ -35,6 +35,23 @@ public class User extends Data {
         setAge(age);
     }
 
+    @Override
+    public String getFolderName() {
+        return UserTable.TABLE_NAME;
+    } // getFolderName
+
+    public User(String fileName) {
+        super(fileName);
+    }
+
+    @Override
+    public boolean load() {
+        super.load();
+
+        String[] split = getData().get(User.HOBBIES).split(",");
+        this.hobbies = new ArrayList<String>(Arrays.asList(split));
+        return true;
+    } // load
 
     public void addHobby(String hobby){
         hobbies.add(hobby);
@@ -44,15 +61,6 @@ public class User extends Data {
     public void removeHobby(String hobby){
         hobbies.remove(hobby);
         getData().put(User.HOBBIES, hobbies.toString());
-    }
-
-    @Override
-    public String getFolderName() {
-        return UserTable.TABLE_NAME;
-    } // getFolderName
-
-    public User(String fileName) {
-        super(fileName);
     }
 
     public String getName() {
