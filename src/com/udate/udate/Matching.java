@@ -14,6 +14,7 @@ import static java.util.Map.Entry.comparingByValue;
 
 
 public class Matching {
+    private static final int MATCHLIST_LIMIT = 10;
     User loggedUser;
     UserTable table;
 
@@ -46,9 +47,11 @@ public class Matching {
         Map<User, Integer> sorted = matchingList // ber hashmapen att sortera alla "poäng"
                 .entrySet()
                 .stream()
-                .sorted(comparingByValue())
+                .sorted(comparingByValue(Comparator.reverseOrder()))
+                .limit(MATCHLIST_LIMIT)
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
-        return matchingList;
+
+        return (HashMap<User, Integer>) sorted;
     }
 
     public static void main(String[] args) {
