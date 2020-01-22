@@ -6,61 +6,63 @@ package com.udate;
 * */
 
 import com.udate.fs.Data;
-import com.udate.fs.Reference;
 import com.udate.udate.fs.*;
-import org.w3c.dom.ls.LSOutput;
-import com.udate.fs.Table;
-import com.udate.udate.UDate;
-import com.udate.udate.fs.Hobby;
-import com.udate.udate.fs.HobbyTable;
-import com.udate.udate.fs.User;
-import com.udate.udate.fs.UserTable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
+        UDateDB db = new UDateDB();
 
-        UserTable userTable = new UserTable();
-        HobbyTable hobbyTable = new HobbyTable();
-        LocationTable locationTable = new LocationTable();
-        //UDate udate = new UDate();
-        //udate.run();
+//        UserTable userTable = new UserTable();
+//        HobbyTable hobbyTable = new HobbyTable();
+//        LocationTable locationTable = new LocationTable();
 
-        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
-        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.ADDRESS));
+//        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
+//        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
 
-        if (!userTable.addRecord(new User( "Peter", "Carlson", "Peter Gatan 1", "Malmö", "333 33",
-                "Carl@gmail.com", "","Male", "23")))
+        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Malmö",
+                "johanna@gmail.com", "hobby/1579177328157.row","Male", "44")))
             System.out.println("Hörru, användaren finns redan!!!!");
+        else
+            System.out.println("Added Kent");
 
-        if (!userTable.addRecord(new User( "Gösta", "g-man", "Gösatan 1", "Malmö", "333 33",
+        if (!db.addRecord(new User( "Gösta", "g-man", "Malmö",
                 "gosta@gpost.com", "","Male", "58")))
             System.out.println("Hörru, användaren finns redan!!!!");
+        else
+            System.out.println("Added Gösta");
 
-       hobbyTable.addRecord(new Hobby("Go-Cart", "Drive the cart, GOGO!", ""));
-       hobbyTable.addRecord(new Hobby("Picnic", "Fight the ants!", "location/1579093279714.row"));
-
-        ArrayList<Data> users = userTable.search(User.NAME, "Johan");
+        ArrayList<Data> users = db.search(UserTable.TABLE_NAME, User.NAME, "Johanna");
         if (users.size() > 0) {
             System.out.println("Search, found " + users.size() + " record(s) : " + users.get(0));
-            HashMap resolvedData = userTable.getResolvedData(users.get(0));
-            System.out.println(resolvedData);
-        }
 
-        hobbyTable.getRecords().forEach((k, v) -> {
-            System.out.println((Data)v + " " + hobbyTable.getResolvedData((Data)v));
+            HashMap<String, String> resolvedData = db.getResolvedData((User)users.get(0));
+            System.out.println("Hobbies i klartext:  " + resolvedData);
+
+//            if (!db.deleteRecord(users.get(0)))
+//                System.out.println("Det gick inte att radera posten " + users.get(0));
+//            else
+//                System.out.println("Post raderad!");
+        } // if users...
+        else
+            System.out.println("Hittade ej Johanna!");
+
+        db.getRecords(HobbyTable.TABLE_NAME).forEach((k, v) -> {
+            System.out.println(v + " " + db.getResolvedData((Hobby)v));
         });
 
-        users = userTable.search(User.SEX, "Male");
+        users = db.search(UserTable.TABLE_NAME, User.GENDER, "Male");
         System.out.println("Search for Males, found " + users.size());
         for (Data d : users) System.out.println(d);
 
-        users = userTable.search(User.SEX, "Female");
+        users = db.search(UserTable.TABLE_NAME, User.GENDER, "Female");
         System.out.println("Search for Females, found " + users.size());
         for (Data d : users) System.out.println(d);
 
+//        hobbyTable.addRecord(new Hobby("Go-Cart", "Drive the cart, GOGO!", ""));
+//        hobbyTable.addRecord(new Hobby("Picnic", "Fight the ants!", "location/1579093279714.row"));
 //        Set set = userTable.getKeys();
 //        System.out.println(set);
 
@@ -81,6 +83,5 @@ public class Main {
         //System.out.println(userTable.dataList.size());
         //userTable.deleteAll();
         //System.out.println(userTable.dataList.size());
-
     }
 }

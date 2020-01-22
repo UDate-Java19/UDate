@@ -34,6 +34,11 @@ public class Location extends Data {
     }
 
     @Override
+    public String getFolderName() {
+        return LocationTable.TABLE_NAME;
+    }
+
+    @Override
     public String toString() {
         return String.format( "Location{Name: %s, Address: %s}", getName(), getAddress());
     }

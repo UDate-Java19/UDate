@@ -22,28 +22,23 @@ abstract public class Table {
 
         // TODO: 2020-01-13 Om vi vill att den ska läsas automatiskt så ska det göras här.
         loadRecords();
-    }
-
-//    public Table (String name, HashMap references, Database db){
-//        this(name);
-//        this.references = references;
-//    }
+    } // Table:Table
 
     private void checkCreateFolder(){
         File folder = new File("./" + name);
         if (!folder.exists()){
             folder.mkdir();
-        }
-    }
+        } // if !folder...
+    } // checkCreateFolder
 
     private void loadRecords() {
         try (Stream<Path> walk = Files.walk(Paths.get("./" + name))) {
             List<String> result = walk.filter(Files::isRegularFile)
-                    .map(x -> x.toString()).collect(Collectors.toList());
+                    .map(Path::toString).collect(Collectors.toList());
 
             result.forEach(fileName -> {
                     Data data = createDataObject(fileName);
-                    data.setFolderName(name);
+//                    data.setFolderName(name);
                     System.out.println("i table loadRecords, data.filename = " + data.getFileName() + " ,filename=" + fileName);
                     data.load();
                     this.dataMap.put(data.getFileName(), data);
@@ -51,40 +46,48 @@ abstract public class Table {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
+        } // catch
+    } // loadRecords
+
+   public boolean delete(){
+       File file = new File(name);
+       System.out.println("data.delete = " + name);
+       return file.delete();
+   } // delete
 
     public boolean deleteRecord(Data data){
-        dataMap.remove(data);
+        dataMap.remove(data.getID());
         return data.delete();
-    }
+    } // deleteRecord
 
     public void deleteAll(){
         dataMap.forEach((k,d) -> d.delete());
         dataMap.clear();
-    }
+    } // deleteAll
 
     public void saveAll(Data data){
         dataMap.forEach((k,d) -> d.save());
     }
 
-    public void addRecord(Data data){
-        data.setFolderName(name);
+    public boolean addRecord(Data data){
+//        data.setFolderName(name);
         data.save();
         dataMap.put(data.getFileName(), data);
-    }
+        return true;
+    }  // addRecord
 
     public Set getKeys(){
         if(dataMap.isEmpty()){
             return null;
-        }
+        } // if dataMap...
         else{
             Map.Entry<String, Data> entry = dataMap.entrySet().iterator().next();
             Data d = entry.getValue();
             HashMap h = d.getData();
             return h.keySet();
-        }
-    }
+        } // else
+    } // getKeys
+
     public Data getRecord(String id){
         return dataMap.get(id);
     }
@@ -97,13 +100,13 @@ abstract public class Table {
            }
         });
         return result;
-    }
+    } // search
 
     public void addReference(Reference ref){
         references.put(ref.getKey(), ref);
     }
 
-    public HashMap getRecords(){
+    public HashMap<String, Data> getRecords(){
         return dataMap;
     }
 
@@ -111,7 +114,7 @@ abstract public class Table {
         return name;
     }
 
-    public HashMap getResolvedData(Data data){
+    public HashMap<String, String> getResolvedData(Data data){
         return data.getResolvedData(references);
-    }
-}
+    } // getResolvedData
+} // class Table
