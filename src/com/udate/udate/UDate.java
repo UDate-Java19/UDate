@@ -113,14 +113,14 @@ public class UDate {
         adminOnline = false;
     } // logoutAdmin
 
-    public void registerUser(Object o) {
+    public boolean registerUser(Object o) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Var god att ange ett användarnamn:");
         String userName = scan.nextLine();
         ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, userName);
         if (res.size() == 1) {
             System.out.println("Användarnamnet finns redan! Prova igen: ");
-            return;
+            return false;
         }
 
         System.out.print("Var god att ange ditt namn: ");
@@ -135,9 +135,17 @@ public class UDate {
         String age = scan.nextLine();
 
 //        addHobbies();
-
-        if(!db.addRecord(new User(name, userName, city, email, "", gender, age)))
+        User newUser= new  User(name, userName, city, email, "", gender, age);
+        if(!db.addRecord(newUser))
             System.out.println("Fel vid sparning av användare");
+        else{
+            if((Boolean)o){
+                System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
+                loggedinUser = newUser;
+                return true;
+            } //if boolean...
+        } //else
+        return false;
    }
 
     public boolean loginAdmin() {
@@ -161,6 +169,15 @@ public class UDate {
            return false;
        } // else
     } // loginAdmin
+
+    public void removeUserAsAdmin(Object o){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Ange ett användarnamn att radera:");
+        String deleteUser = scan.nextLine();
+        ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, deleteUser);
+        if (res.size() == 1) {
+        }
+    }
 
     public void methodPlaceholder(Object o) {
     }
