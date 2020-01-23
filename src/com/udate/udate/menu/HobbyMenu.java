@@ -16,12 +16,5 @@ public class HobbyMenu extends Menu {
         mainMenu.add(new MenuChoice("Ta bort hobby", '2', p::methodPlaceholder));
         mainMenu.add(new MenuChoice("Tillbaka", '0', null));
         currentMenu = mainMenu;
-    }
-    private void printMenu() {
-        System.out.println("");
-        for (MenuChoice m : currentMenu) {
-            System.out.printf("%s%n", m.getFullTitle());
-        } // for m...
-        System.out.print("Ange ditt val: ");
-    } // printMenu
+    } // HobbyMEnu::HobbyMenu
 } // class HobbyMenu

@@ -6,6 +6,10 @@ import java.util.Scanner;
 abstract public class Menu {
     protected ArrayList<MenuChoice> currentMenu;
 
+    protected void setMenu(Object o) {
+        currentMenu = (ArrayList<MenuChoice>) o;
+    } // setMenu
+
     private void printMenu() {
         System.out.println("");
         for (MenuChoice m : currentMenu) {
