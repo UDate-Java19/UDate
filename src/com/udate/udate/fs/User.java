@@ -129,18 +129,18 @@ public class User extends Data {
 
         Like like = new Like("", loggedInUser.getID(), getID());
         db.addRecord(like);
-        System.out.printf("You ♥ %s", getUsername());
+        System.out.printf("%nDu ♥ %s%n", getUsername());
     }
 
     public void likeBack(Like lp) {
 
         if ((lp.getLikedBack()).equals("1")){
-            System.out.println("You guys already ♥ each other.");
+            System.out.println("%nNi ♥ redan varandra.%n");
         }
         else {
             lp.setLikedBack("1");
             lp.save();
-            System.out.println("You guys ♥ each other!");
+            System.out.println("%nNi ♥ varandra!%n");
         }
     }
 
@@ -158,8 +158,9 @@ public class User extends Data {
 
     @Override
     public String toString() {
-        return String.format("User{Username: %s, Name: %s, Sex: %s, Age: %s, Email: %s, City: %s, Hobbies: %s.}",
-                getUsername(), getName(), getGender(), getAge(), getEmail(), getCity(), getHobbies());
+
+        return String.format("%s, %nNamn: %s %nKön: %s %nÅlder: %s %nEmail: %s %nStad: %s %nHobbies: %s",
+                getUsername(), getName(), getGender(), getAge(), getEmail(), getCity(), getHobbyList());
     }
 
 }
