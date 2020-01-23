@@ -22,8 +22,8 @@ public class UDate {
    }
 
     public void run() {
-
-       m.handleMenu();
+        // run the main menu
+        m.handleMenu();
     } // run
 
     private void addLocations() {
