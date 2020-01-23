@@ -73,7 +73,11 @@ public class Database {
         return getTable(table).search(searchField, searchTerm);
     } // search
 
-    public HashMap<String, String> getResolvedData(Data data) {
+    public HashMap<String, String> getResolvedDataRaw(Data data) {
+        return getTable(data.getFolderName()).getResolvedDataRaw(data);
+    } // getResolvedData
+
+    public Data getResolvedData(Data data) {
         return getTable(data.getFolderName()).getResolvedData(data);
     } // getResolvedData
 } // class Database

@@ -5,7 +5,12 @@ package com.udate;
 *
 * */
 
+import com.udate.fs.Data;
 import com.udate.udate.UDate;
+import com.udate.udate.fs.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,14 +19,22 @@ public class Main {
 
 //        UDateDB db = new UDateDB();
 
-
+//        HashMap<String, Data>  users = db.getRecords(UserTable.TABLE_NAME);
+//
+//        users.forEach((k,v) ->{
+//            User u = (User)v;
+//            String tempHobbies = u.getHobbies();
+//            tempHobbies = tempHobbies.replace("\\", "/");
+//            u.setHobbies(tempHobbies);
+//            u.save();
+//        });
 
 //        UserTable userTable = new UserTable();
 //        HobbyTable hobbyTable = new HobbyTable();
 //        LocationTable locationTable = new LocationTable();
 
         //HashMap<String,Data> res = db.getRecords(UserTable.TABLE_NAME);
-         User loggedInUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "amaggi8").get(0);
+//         User loggedInUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "amaggi8").get(0);
 
 //        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Malmö",
 //                "johanna@gmail.com", "hobby/1579177328157.row","Male", "44")))
@@ -41,6 +54,7 @@ public class Main {
 //
 //            HashMap<String, String> resolvedData = db.getResolvedData((User)users.get(0));
 //            System.out.println("Hobbies i klartext:  " + resolvedData);
+//    }
 
 //            if (!db.deleteRecord(users.get(0)))
 //                System.out.println("Det gick inte att radera posten " + users.get(0));

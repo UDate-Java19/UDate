@@ -2,6 +2,8 @@ package com.udate.udate.fs;
 import com.udate.fs.Data;
 import com.udate.fs.Table;
 
+import java.util.HashMap;
+
 public class LikeTable extends Table {
         public final static String TABLE_NAME = "like";
 
@@ -11,6 +13,9 @@ public class LikeTable extends Table {
 
         @Override
         public Data createDataObject(String fileName) { return new Like(fileName); }
+
+        @Override
+        public Data createDataObject(HashMap<String, String> hm) {return new Like(hm); };
 
        // public void addRecord(Like like){ super.addRecord(like); }
 

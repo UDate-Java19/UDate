@@ -6,9 +6,10 @@ import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
 import com.udate.udate.menu.ProfileMenu;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+
+import static java.util.Map.Entry.comparingByValue;
+import static java.util.stream.Collectors.toMap;
 
 public class UDate {
 
@@ -68,7 +69,31 @@ public class UDate {
         adminOnline = false;
     } // logoutAdmin
 
-    public boolean registerUser(Object o) {
+    public void showHobbyMenu(){
+        HobbyMenu m = new HobbyMenu(this);
+
+        m.handleMenu();
+    } // showHobbyMenu
+
+    public void addHobbyToLoggedinUser(Object o){
+       printSortedHobbyList();
+       System.out.print("Välj en hobby att lägga till: ");
+       Scanner scan  = new Scanner(System.in);
+       String hobby = scan.nextLine();
+        ArrayList<Data> res = db.search(HobbyTable.TABLE_NAME, Hobby.NAME, hobby);
+        if (res.size() > 0) {
+            loggedinUser.addHobby(res.get(0).getID());
+            loggedinUser.save();
+        } else{
+            System.out.println("Hittar ej hobbyn!");
+        } // else
+    } // addHobbyToLoggedinUser
+
+    public void removeHobbyFromLoggedinUser(Object o){
+
+    } // removeHobbyFromLoggedinUser
+
+    public boolean registerUser(boolean createAsUser) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Var god att ange ett användarnamn:");
         String userName = scan.nextLine();
@@ -93,9 +118,9 @@ public class UDate {
         if(!db.addRecord(newUser))
             System.out.println("Fel vid sparning av användare");
         else{
-            if((Boolean)o){
+            if(createAsUser){
                 loggedinUser = newUser;
-                //        showHobbyMenu();
+                showHobbyMenu();
                 System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
                 return true;
             } //if boolean...
@@ -140,12 +165,6 @@ public class UDate {
             System.out.println("Användaren finns inte");
     } // removeUserAsAdmin
 
-    public void showHobbyMenu(Object o){
-        HobbyMenu m = new HobbyMenu(this);
-
-        m.handleMenu();
-    } // showHobbyMenu
-
     public void addHobby(Object o){
         Scanner scan = new Scanner(System.in);
 
@@ -161,10 +180,17 @@ public class UDate {
             System.out.println("Kunde ej lägga till ny hobby!");
     } // addHobby
 
-    public void deleteHobby(Object o){
-        HashMap<String, Data> recs = db.getRecords(HobbyTable.TABLE_NAME);
-        recs.forEach((k, v) -> System.out.println(v));
+    private void printSortedHobbyList(){
+        Map<String, Data> sorted = SortLists.sortHobbyListByName(db.getRecords(HobbyTable.TABLE_NAME));
+        sorted.forEach((k, v) -> {
+            System.out.printf("%s%n---------------------%n", db.getResolvedData((Hobby)v));
+        });
+    } // printSortedHobbyList
 
+    public void deleteHobby(Object o){
+        printSortedHobbyList();
+
+        System.out.print("Ange hobby att radera: ");
         Scanner scan = new Scanner(System.in);
         String hobby = scan.nextLine();
 
@@ -178,6 +204,37 @@ public class UDate {
         else
             System.out.println("Hobbyn finns inte");
     } // deleteHobby
+
+    public void editHobby(Object o){
+        printSortedHobbyList();
+
+        System.out.print("Ange hobby att redigera: ");
+        Scanner scan = new Scanner(System.in);
+        String hobby = scan.nextLine();
+
+        ArrayList<Data> res = db.search(HobbyTable.TABLE_NAME, Hobby.NAME, hobby);
+        if (res.size() == 1) {
+            Hobby hobbyRec = (Hobby)res.get(0);
+
+//            Hobby resolvedData = db.getResolvedDataRaw(hobbyRec);
+            System.out.printf("Ange namn på hobbyn [%s] (tom sträng behåller det gamla värdet): ", hobbyRec.getName());
+
+            String name = scan.nextLine();
+            if (!name.equals(""))
+                hobbyRec.setName(name);
+
+            System.out.printf("Beskriv hobbyn [%s] (tom sträng behåller det gamla värdet): ", hobbyRec.getDescription());
+            String desc = scan.nextLine();
+            if (!desc.equals(""))
+                hobbyRec.setDescription(desc);
+
+//            showHobbyMenu();
+
+            hobbyRec.save();
+        } // if res...
+        else
+            System.out.println("Hobbyn finns inte");
+    } // editHobby
 
     public void methodPlaceholder(Object o) {
     }
@@ -203,19 +260,17 @@ public class UDate {
     }
 
     public void searchUser(Object o) {
-       Scanner scanny = new Scanner(System.in);
-        System.out.println("Sök användarnamn: ");
+        Scanner scanny = new Scanner(System.in);
+        System.out.print("Sök användarnamn: ");
         String username = scanny.nextLine();
-        ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
 
-        if(result.size() > 0){
-            //HashMap<String, String> resolvedData = db.getResolvedData((User)result.get(0));
-            //hobbies ska printas i klartext
-            System.out.println(result);
+        ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
+        if (result.size() > 0){
+            System.out.println(db.getResolvedData((User)result.get(0)));
             ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
             pm.handleMenu();
-        }
-        System.out.printf("%nHittade ingen vid detta användarnamn.");
-    }
+        } else
+            System.out.printf("%nHittade ingen med detta användarnamn.");
+    } // searchUser
 } // class UDate
 

@@ -3,6 +3,8 @@ package com.udate.udate.fs;
 import com.udate.fs.Data;
 import com.udate.fs.Table;
 
+import java.util.HashMap;
+
 public class LocationTable extends Table {
     
     public final static String TABLE_NAME = "location";
@@ -14,11 +16,13 @@ public class LocationTable extends Table {
     public LocationTable(String name) {super(name);
     }
 
-    @Override
+        @Override
     public Data createDataObject(String fileName) {
         return new Location(fileName);
     }
 
+    @Override
+    public Data createDataObject(HashMap<String, String> hm) {return new Location(hm); };
 
 //    public void addRecord(String name, String address) {
 //        Location location = new Location(this.name);

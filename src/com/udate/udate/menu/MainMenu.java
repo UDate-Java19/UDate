@@ -37,7 +37,7 @@ public class MainMenu extends Menu {
 
         adminHobbiesMenu.add(new MenuChoice("Lägg till hobby", '1', p::addHobby));
         adminHobbiesMenu.add(new MenuChoice("Ta bort hobby", '2', p::deleteHobby));
-        adminHobbiesMenu.add(new MenuChoice("Redigera hobby", '3', p::methodPlaceholder));
+        adminHobbiesMenu.add(new MenuChoice("Redigera hobby", '3', p::editHobby));
         adminHobbiesMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
 
         adminLocationsMenu.add(new MenuChoice("Lägg till plats", '1', p::methodPlaceholder));
@@ -63,14 +63,18 @@ public class MainMenu extends Menu {
         userLikesMenu.add(new MenuChoice("Se vilka som gillar mig", '2', p::methodPlaceholder, null));
         userLikesMenu.add(new MenuChoice("Vi gillar varandra! :)", '0', p::methodPlaceholder, null));
         userLikesMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
-
-        currentMenu = mainMenu;
     }
+
+    @Override
+    public ArrayList<MenuChoice> setInitialMenu() {
+        return mainMenu;
+    } // setInitialMenu
 
     private void createUser(Object o){
         if (((UDate)o).registerUser(true))
             setMenu(userMenu);
-    }
+    } // createUser
+
     private void createUserAsAdmin(Object o){
         ((UDate)o).registerUser(false);
     }

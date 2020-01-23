@@ -18,6 +18,6 @@ public class UDateDB extends Database {
         addTable(LikeTable.TABLE_NAME, new LikeTable());
 
         getTable(UserTable.TABLE_NAME).addReference(new Reference(getTable(HobbyTable.TABLE_NAME), User.HOBBIES, Data.ID, Hobby.NAME));
-        getTable(UserTable.TABLE_NAME).addReference(new Reference(getTable(LocationTable.TABLE_NAME), Hobby.LOCATIONS, Data.ID, Location.NAME));
+        getTable(HobbyTable.TABLE_NAME).addReference(new Reference(getTable(LocationTable.TABLE_NAME), Hobby.LOCATIONS, Data.ID, Location.NAME));
     } // UDateDB:UdateDB
 } // UDateDB
