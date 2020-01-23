@@ -120,7 +120,7 @@ public class User extends Data {
 
     public void likeUser(UDateDB db, User loggedInUser){
 
-        Like like = new Like(loggedInUser.getID(), getID());
+        Like like = new Like("", loggedInUser.getID(), getID());
         db.addRecord(like);
         System.out.printf("You ♥ %s", getUsername());
     }

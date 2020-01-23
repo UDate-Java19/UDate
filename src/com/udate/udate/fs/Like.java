@@ -9,14 +9,12 @@ public class Like extends Data {
 
     public Like(String fileName) {super(fileName); }
 
-    public Like(String userId, String likedUserId) {
-        super("");
+    public Like(String fileName, String userId, String likedUserId) {
+        super(fileName);
         setUserId(userId);
         setLikedUserId(likedUserId);
         setLikedBack("0");
-
     }
-
 
     public void setUserId(String user){ getData().put(Like.USER_ID, user); }
 
@@ -40,7 +38,5 @@ public class Like extends Data {
     public  String getLikedBack() {
         return (String)getData().get(Like.LIKED_BACK);
     }
-
-
 
 }
