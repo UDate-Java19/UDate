@@ -26,6 +26,11 @@ public class UDate {
 //       createTables();
    }
 
+
+    public UDate() {
+        createTables();
+    }
+
     public void run() {
 
        m.handleMenu();
@@ -78,7 +83,6 @@ public class UDate {
 //    }
 
     private void searchUser() {
-
     }
 
     private void deleteLocation() {
@@ -213,3 +217,7 @@ public class UDate {
     public void methodPlaceholder(Object o) {
     }
 }
+
+
+
+
