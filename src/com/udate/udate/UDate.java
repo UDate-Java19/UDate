@@ -209,11 +209,16 @@ public class UDate {
         String deleteLocation = scan.nextLine();
 
         ArrayList<Data> res = db.search(LocationTable.TABLE_NAME, Location.NAME, deleteLocation);
-        if (res.size() == 1) {
-            if (db.deleteRecord(res.get(0)))
-                System.out.println(String.format("Plats %s raderad", deleteLocation));
-            else
-                System.out.print(String.format("Plats %s kunde ej raderas", deleteLocation));
+        if (res.size() > 0) {
+            System.out.println("Det finns " + res.size() + " plats(er). Vill du verkligen radera? (Ja/Nej)");
+            if (scan.nextLine().equals("Ja")) {
+                for (Data d : res) {
+                    if (db.deleteRecord(d))
+                        System.out.println(String.format("Plats %s raderad", deleteLocation));
+                    else
+                        System.out.print(String.format("Plats %s kunde ej raderas", deleteLocation));
+                }
+            }
         }
         else System.out.println("Plats finns inte");
     }
