@@ -4,7 +4,8 @@ package com.udate.udate.fs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+        import java.util.HashMap;
+        import java.util.List;
 
 public class User extends Data {
 
@@ -117,9 +118,45 @@ public class User extends Data {
         getData().put(User.AGE, age);
     }
 
+    public void likeUser(UDateDB db, User loggedInUser){
+
+        Like like = new Like(loggedInUser.getID(), ID);
+        db.addRecord(like);
+
+        //User user = (User) db.getRecords(UserTable.TABLE_NAME).get(12);
+       // ArrayList<Data> users = db.search(User.NAME, "Johanna");
+        //User likedUser = (User)users.get(0);
+
+
+
+
+    }
+
+    public void likeBack(Like lp) {
+        lp.setLikedBack("1");
+        lp.save();
+    }
+
+    public Like hasLikedMe(UDateDB db, User loggedInUser) {
+        //check first if there are ANY like posts including my id
+        ArrayList<Data> likePosts = db.search(LikeTable.TABLE_NAME, Like.LIKES_USER_ID, loggedInUser.getID());
+        //then loop through the list of results
+        //check if Like user_id = likedUser
+        for (Data lp : likePosts) {
+            if (((Like) lp).getID().equals(ID)) {
+                return (Like) lp;
+            }
+        }
+        return null;
+
+    }
+
+
+
     @Override
     public String toString() {
         return String.format("User{Username: %s, Name: %s, Sex: %s, Age: %s, Email: %s, City: %s, Hobbies: %s.}",
                 getUsername(), getName(), getGender(), getAge(), getEmail(), getCity(), getHobbies());
     }
+
 }

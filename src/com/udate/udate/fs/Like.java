@@ -7,6 +7,7 @@ public class Like extends Data {
     public static final String LIKES_USER_ID = "likedUserId";
     public static final String LIKED_BACK = "likedBack";
 
+
     @Override
     public String getFolderName() {
         return LikeTable.TABLE_NAME;
@@ -16,12 +17,14 @@ public class Like extends Data {
         super(folderName);
     }
 
-    public Like(String fileName, String userId, String likedUserId, String likesBack){
-        super(fileName);
+    public Like(String userId, String likedUserId) {
+        super("");
         setUserId(userId);
         setLikedUserId(likedUserId);
         setLikedBack("0");
+
     }
+
 
     public void setUserId(String user){ getData().put(Like.USER_ID, user); }
 
@@ -29,10 +32,10 @@ public class Like extends Data {
 
     public void setLikedBack(String likesBack){ getData().put(Like.LIKED_BACK, likesBack); }
 
-    public String getUserId() {
-        return (String)getData().get(Like.USER_ID);
-    }
-
+//    public String getUserId() {
+//
+//        return (String)getData().get(Like.USER_ID);
+//    }
     public  String getLikedUserId() {
         return (String)getData().get(Like.LIKES_USER_ID);
     }
