@@ -7,6 +7,7 @@ import com.udate.udate.menu.Menu;
 
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class UDate {
@@ -186,7 +187,7 @@ public class UDate {
 
     public void adminAddLocation(Object o) {
         Scanner scan = new Scanner(System.in);
-        System.out.print("Skriv en plats du vill ta bort: ");
+        System.out.print("Skriv en plats du vill lägga till: ");
         String location = scan.nextLine();
         System.out.println("Skriv in adressen: ");
         String address = scan.nextLine();
@@ -200,6 +201,9 @@ public class UDate {
     }
 
     public void adminDeleteLocation(Object o) {
+        HashMap<String, Data> recs = db.getRecords(LocationTable.TABLE_NAME);
+        recs.forEach((k, v) ->System.out.println(v));
+
         Scanner scan = new Scanner(System.in);
         System.out.print("Ange en plats du vill ta bort: ");
         String deleteLocation = scan.nextLine();
