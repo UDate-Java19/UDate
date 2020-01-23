@@ -48,7 +48,7 @@ public class MainMenu extends Menu {
         userMenu.add(new MenuChoice("Hantera profil", '1', this::setMenu, userProfileMenu));
         userMenu.add(new MenuChoice("Hitta datingpartner", '2', this::setMenu, userListMenu));
         userMenu.add(new MenuChoice("Se matchningar", '3', p::methodPlaceholder));
-        userMenu.add(new MenuChoice("Se gilla-markeringar", '3', p::methodPlaceholder));
+        userMenu.add(new MenuChoice("Se gilla-markeringar", '4', this::setMenu, userLikesMenu));
         userMenu.add(new MenuChoice("Logga ut", '0', this::logout, p));
 
         userProfileMenu.add(new MenuChoice("Redigera", '1', p::methodPlaceholder));
@@ -59,7 +59,7 @@ public class MainMenu extends Menu {
         userListMenu.add(new MenuChoice("Lista användare i din stad", '2', p::methodPlaceholder, null));
         userListMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
 
-        userLikesMenu.add(new MenuChoice("Se vilka jag gillat", '1', p::methodPlaceholder, null));
+        userLikesMenu.add(new MenuChoice("Se vilka jag gillat", '1', p::viewMyLikes, null));
         userLikesMenu.add(new MenuChoice("Se vilka som gillar mig", '2', p::methodPlaceholder, null));
         userLikesMenu.add(new MenuChoice("Vi gillar varandra! :)", '0', p::methodPlaceholder, null));
         userLikesMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));

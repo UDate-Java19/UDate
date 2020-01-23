@@ -1,6 +1,7 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
+import com.udate.fs.Table;
 import com.udate.udate.fs.*;
 import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
@@ -18,9 +19,9 @@ public class UDate {
     private User loggedinUser = null;
     private boolean adminOnline = false;
 
-   public UDate(){
+    public UDate() {
         m = new MainMenu(this);
-   }
+    }
 
     public void run() {
         // run the main menu
@@ -89,11 +90,11 @@ public class UDate {
         System.out.print("Var god att ange din ålder: ");
         String age = scan.nextLine();
 
-        User newUser= new  User(name, userName, city, email, "", gender, age);
-        if(!db.addRecord(newUser))
+        User newUser = new User(name, userName, city, email, "", gender, age);
+        if (!db.addRecord(newUser))
             System.out.println("Fel vid sparning av användare");
-        else{
-            if((Boolean)o){
+        else {
+            if ((Boolean) o) {
                 loggedinUser = newUser;
                 //        showHobbyMenu();
                 System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
@@ -101,11 +102,11 @@ public class UDate {
             } //if boolean...
         } //else
         return false;
-   }
+    }
 
     public boolean loginAdmin() {
-       Scanner scan = new Scanner(System.in);
-       System.out.print("Vänligen ange admin-lösenordet: ");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Vänligen ange admin-lösenordet: ");
 //       Console con = System.console();
 //        if(con == null)
 //        {
@@ -113,19 +114,18 @@ public class UDate {
 //            return;
 //        }
 
-       String sPwd = scan.nextLine();
+        String sPwd = scan.nextLine();
 //        String sPwd = con.readPassword().toString();
-       if (sPwd.equals("12359")) {
-           adminOnline = true;
-           return true;
-       }
-       else{
-           System.out.println("Fel lösenord - stick och brinn!");
-           return false;
-       } // else
+        if (sPwd.equals("12359")) {
+            adminOnline = true;
+            return true;
+        } else {
+            System.out.println("Fel lösenord - stick och brinn!");
+            return false;
+        } // else
     } // loginAdmin
 
-    public void removeUserAsAdmin(Object o){
+    public void removeUserAsAdmin(Object o) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Ange ett användarnamn att radera: ");
         String deleteUser = scan.nextLine();
@@ -140,13 +140,13 @@ public class UDate {
             System.out.println("Användaren finns inte");
     } // removeUserAsAdmin
 
-    public void showHobbyMenu(Object o){
+    public void showHobbyMenu(Object o) {
         HobbyMenu m = new HobbyMenu(this);
 
         m.handleMenu();
     } // showHobbyMenu
 
-    public void addHobby(Object o){
+    public void addHobby(Object o) {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Ange namn på hobbyn: ");
@@ -161,7 +161,7 @@ public class UDate {
             System.out.println("Kunde ej lägga till ny hobby!");
     } // addHobby
 
-    public void deleteHobby(Object o){
+    public void deleteHobby(Object o) {
         HashMap<String, Data> recs = db.getRecords(HobbyTable.TABLE_NAME);
         recs.forEach((k, v) -> System.out.println(v));
 
@@ -187,10 +187,9 @@ public class UDate {
         User likedUser = (User) o;
         Like lp = loggedinUser.hasLikedMe(db, likedUser);
 
-        if (lp != null){
+        if (lp != null) {
             System.out.printf("%nDu har redan ♥ %s.%n", likedUser.getUsername());
-        }
-        else {
+        } else {
 
             lp = likedUser.hasLikedMe(db, loggedinUser);
 
@@ -203,19 +202,37 @@ public class UDate {
     }
 
     public void searchUser(Object o) {
-       Scanner scanny = new Scanner(System.in);
+        Scanner scanny = new Scanner(System.in);
         System.out.println("Sök användarnamn: ");
         String username = scanny.nextLine();
-        ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
+        ArrayList<Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
 
-        if(result.size() > 0){
+        if (result.size() > 0) {
             //HashMap<String, String> resolvedData = db.getResolvedData((User)result.get(0));
             //hobbies ska printas i klartext
             System.out.println(result);
-            ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
+            ProfileMenu pm = new ProfileMenu(this, (User) result.get(0));
             pm.handleMenu();
         }
         System.out.printf("%nHittade ingen vid detta användarnamn.");
+    }
+
+    public void viewMyLikes(Object o) {
+        ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, User.ID, loggedinUser.getID());
+        //ArrayList<String> likedUserList = new ArrayList<>();
+
+        for (Data lp : result) {
+            String likedUserId = ((Like) lp).getLikedUserId();
+            String userName = getUserNameFromId(likedUserId);
+            System.out.println(userName);
+//            likedUserList.add(likedUser);
+        }
+
+    }
+
+    private String getUserNameFromId(String id) {
+        ArrayList<Data> user = db.search(UserTable.TABLE_NAME, User.ID,id);
+        return ((User) user.get(0)).getUsername();
     }
 } // class UDate
 

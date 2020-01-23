@@ -21,7 +21,7 @@ public class Main {
 //        LocationTable locationTable = new LocationTable();
 
         //HashMap<String,Data> res = db.getRecords(UserTable.TABLE_NAME);
-         User loggedInUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "amaggi8").get(0);
+         //User loggedInUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "amaggi8").get(0);
 
 //        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Malmö",
 //                "johanna@gmail.com", "hobby/1579177328157.row","Male", "44")))
