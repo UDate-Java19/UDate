@@ -179,14 +179,14 @@ public class UDate {
         }
     }
 
-    public void adminAddLocation(UDate p) {
+    public void adminAddLocation(Object o) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Skriv en plats du vill lägga till: ");
         String location = scan.nextLine();
         System.out.println("Skriv in adressen: ");
         String address = scan.nextLine();
 
-        Location newLocation = new Location(location, address);
+        Location newLocation = new Location("", location, address);
         if (!db.addRecord(newLocation))
             System.out.println("Fel vid sparning av användare");
     }
