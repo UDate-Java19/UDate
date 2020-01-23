@@ -20,15 +20,15 @@ public class LocationTable extends Table {
     }
 
 
-    public void addRecord(String name, String address) {
-        Location location = new Location(this.name);
-        location.getData().put(Location.NAME, name);
-        location.getData().put(Location.ADDRESS, address);
+//    public void addRecord(String name, String address) {
+//        Location location = new Location(this.name);
+//        location.getData().put(Location.NAME, name);
+//        location.getData().put(Location.ADDRESS, address);
+//
+//        addRecord(location);
+//    }
 
-        addRecord(location);
-    }
-
-    public void addRecord(Location location){
-        super.addRecord(location);
-    }
+//    public void addRecord(Location location){
+//        super.addRecord(location);
+//    }
     }
