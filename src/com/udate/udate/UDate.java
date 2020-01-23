@@ -1,17 +1,17 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
-import com.udate.fs.Reference;
 import com.udate.udate.fs.*;
-import com.udate.udate.menu.Menu;
+import com.udate.udate.menu.HobbyMenu;
+import com.udate.udate.menu.MainMenu;
 
-import java.io.Console;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class UDate {
 
-    private Menu m;
+    private MainMenu m;
     private UDateDB db = new UDateDB();
 
     private User loggedinUser = null;
@@ -22,7 +22,7 @@ public class UDate {
 //    private UserTable userTable;
 
    public UDate(){
-        m = new Menu(this);
+        m = new MainMenu(this);
 //       createTables();
    }
 
@@ -134,14 +134,14 @@ public class UDate {
         System.out.print("Var god att ange din ålder: ");
         String age = scan.nextLine();
 
-//        addHobbies();
         User newUser= new  User(name, userName, city, email, "", gender, age);
         if(!db.addRecord(newUser))
             System.out.println("Fel vid sparning av användare");
         else{
             if((Boolean)o){
-                System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
                 loggedinUser = newUser;
+                //        showHobbyMenu();
+                System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
                 return true;
             } //if boolean...
         } //else
@@ -172,12 +172,43 @@ public class UDate {
 
     public void removeUserAsAdmin(Object o){
         Scanner scan = new Scanner(System.in);
-        System.out.print("Ange ett användarnamn att radera:");
+        System.out.print("Ange ett användarnamn att radera: ");
         String deleteUser = scan.nextLine();
         ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, deleteUser);
         if (res.size() == 1) {
+            if (db.deleteRecord(res.get(0)))
+                System.out.println(String.format("Användare %s raderad", deleteUser));
+            else
+                System.out.print(String.format("Användare %s kunde ej raderas", deleteUser));
         }
+        else System.out.println("Användare finns inte");
     }
+
+    public void showHobbyMenu(Object o){
+        HobbyMenu m = new HobbyMenu(this);
+
+        m.handleMenu();
+    } // showHobbyMenu
+
+    public void addHobby(Object o){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Ange namn på hobbyn: ");
+        String name = scan.nextLine();
+
+        System.out.print("Beskriv hobbyn: ");
+        String desc = scan.nextLine();
+
+        if (db.addRecord(new Hobby(name, desc, "")))
+            System.out.println(String.format("%s har blivit tillagd!", name));
+        else
+            System.out.println("Kunde ej lägga till ny hobby!");
+    } // addHobby
+
+    public void deleteHobby(Object o){
+        HashMap<String, Data> recs = db.getRecords(HobbyTable.TABLE_NAME);
+        recs.forEach((k, v) -> System.out.println((v)));
+    }    // deleteHobby
 
     public void methodPlaceholder(Object o) {
     }
