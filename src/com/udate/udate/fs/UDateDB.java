@@ -15,6 +15,7 @@ public class UDateDB extends Database {
         addTable(UserTable.TABLE_NAME, new UserTable());
         addTable(HobbyTable.TABLE_NAME, new HobbyTable());
         addTable(LocationTable.TABLE_NAME, new LocationTable());
+        addTable(LikeTable.TABLE_NAME, new LikeTable());
 
         getTable(UserTable.TABLE_NAME).addReference(new Reference(getTable(HobbyTable.TABLE_NAME), User.HOBBIES, Data.ID, Hobby.NAME));
         getTable(UserTable.TABLE_NAME).addReference(new Reference(getTable(LocationTable.TABLE_NAME), Hobby.LOCATIONS, Data.ID, Location.NAME));
