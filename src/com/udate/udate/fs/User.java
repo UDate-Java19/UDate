@@ -18,6 +18,10 @@ public class User extends Data {
 
     ArrayList<String> hobbies = new ArrayList<String>();
 
+    public User(String fileName) {
+        super(fileName);
+    }
+
     public User(String name, String userName, String city, String email,
                 String hobbies, String gender, String age) {
         this("", name, userName, city, email, hobbies, gender, age);
@@ -34,6 +38,14 @@ public class User extends Data {
         setGender(gender);
         setAge(age);
     }
+    @Override
+    public boolean load() {
+        super.load();
+
+        String[] split = getData().get(User.HOBBIES).split(",");
+        this.hobbies = new ArrayList<String>(Arrays.asList(split));
+        return true;
+    } // load
 
     @Override
     public String getFolderName() {
@@ -62,6 +74,11 @@ public class User extends Data {
         hobbies.remove(hobby);
         getData().put(User.HOBBIES, hobbies.toString());
     }
+
+    @Override
+    public String getFolderName() {
+        return UserTable.TABLE_NAME;
+    } // getFolderName
 
     public String getName() {
         return (String)getData().get(User.NAME);

@@ -64,13 +64,14 @@ public class UDate {
 //        userTable.addReference(new Reference(userTable, User.HOBBIES, Data.ID, Hobby.NAME));
 //    }
 
-    private void addUsers() {
-//        userTable.addRecord("Snehal", "snehalLovesYou", "malmövägen",
-//                "malmö", "34567", "snehal@gmail.com", " ", "f", "25");
-//        userTable.addRecord("Janis", "janisIsGreat", "bjuvvägeen",
-//                "bjuv", "34567", "janis@awesome.com", " ", "m", "45");
 
-    }
+    /*private void addUsers() {
+        userTable.addRecord("Snehal", "snehalLovesYou", "malmövägen",
+                "malmö", "34567", "snehal@gmail.com", " ", "f", "25");
+        userTable.addRecord("Janis", "janisIsGreat", "bjuvvägeen",
+                "bjuv", "34567", "janis@awesome.com", " ", "m", "45");
+
+    }*/
 
 //    private void printAllPosts() {
 //       hobbyTable.getRecords();
