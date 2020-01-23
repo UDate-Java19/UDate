@@ -1,85 +1,38 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
-import com.udate.fs.Reference;
 import com.udate.udate.fs.*;
-import com.udate.udate.menu.Menu;
+import com.udate.udate.menu.HobbyMenu;
+import com.udate.udate.menu.MainMenu;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class UDate {
 
-    private Menu m;
+    private MainMenu m;
     private UDateDB db = new UDateDB();
 
     private User loggedinUser = null;
     private boolean adminOnline = false;
 
-//    private HobbyTable hobbyTable;
-//    private LocationTable locationTable;
-//    private UserTable userTable;
-
    public UDate(){
-        m = new Menu(this);
-//       createTables();
+        m = new MainMenu(this);
    }
 
     public void run() {
-
-       m.handleMenu();
-//        addHobbies();
-//        addLocations();
-//        createReference();
-//        addUsers();
-//        printAllPosts();
-//        searchUser();
-//        deleteLocation();
-//        editHobby();
-//        logInUser();
-//        logOutUser();
-    }
-
-//    private void createTables() {
-//       userTable = new UserTable();
-//       locationTable = new LocationTable();
-//       hobbyTable = new HobbyTable();
-//    }
+        // run the main menu
+        m.handleMenu();
+    } // run
 
     private void addLocations() {
-//        locationTable.addRecord("India", "India"); //byt ut sen
-//        locationTable.addRecord("Malmö", "in the park");
-//        locationTable.addRecord("Palace", "4th street");
-//        locationTable.addRecord("Spa", "Åhus");
     }
 
     private void addHobbies() {
-//        hobbyTable.addRecord("fishing", "lovely fishing in lake");
-//        hobbyTable.addRecord("eat out", "lovely romantic dinner");
-//        hobbyTable.addRecord("cricket", "nice game of cricket");
     }
 
-//    private void createReference() {
-//        userTable.addReference(new Reference(userTable, User.HOBBIES, Data.ID, Hobby.NAME));
-//    }
-
-
-    /*private void addUsers() {
-        userTable.addRecord("Snehal", "snehalLovesYou", "malmövägen",
-                "malmö", "34567", "snehal@gmail.com", " ", "f", "25");
-        userTable.addRecord("Janis", "janisIsGreat", "bjuvvägeen",
-                "bjuv", "34567", "janis@awesome.com", " ", "m", "45");
-
-    }*/
-
-//    private void printAllPosts() {
-//       hobbyTable.getRecords();
-//    }
-
     private void searchUser() {
-
     }
 
     private void deleteLocation() {
@@ -135,14 +88,14 @@ public class UDate {
         System.out.print("Var god att ange din ålder: ");
         String age = scan.nextLine();
 
-//        addHobbies();
         User newUser= new  User(name, userName, city, email, "", gender, age);
         if(!db.addRecord(newUser))
             System.out.println("Fel vid sparning av användare");
         else{
             if((Boolean)o){
-                System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
                 loggedinUser = newUser;
+                //        showHobbyMenu();
+                System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
                 return true;
             } //if boolean...
         } //else
@@ -178,12 +131,52 @@ public class UDate {
         ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, deleteUser);
         if (res.size() == 1) {
             if (db.deleteRecord(res.get(0)))
-                System.out.println(String.format("Användare %s raderad", deleteUser));
+                System.out.println(String.format("Användare '%s' raderad", deleteUser));
             else
-                System.out.print(String.format("Användare %s kunde ej raderas", deleteUser));
-        }
-        else System.out.println("Användare finns inte");
-    }
+                System.out.print(String.format("Användare '%s' kunde ej raderas", deleteUser));
+        } // if res...
+        else
+            System.out.println("Användaren finns inte");
+    } // removeUserAsAdmin
+
+    public void showHobbyMenu(Object o){
+        HobbyMenu m = new HobbyMenu(this);
+
+        m.handleMenu();
+    } // showHobbyMenu
+
+    public void addHobby(Object o){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Ange namn på hobbyn: ");
+        String name = scan.nextLine();
+
+        System.out.print("Beskriv hobbyn: ");
+        String desc = scan.nextLine();
+
+        if (db.addRecord(new Hobby(name, desc, "")))
+            System.out.println(String.format("'%s' har blivit tillagd!", name));
+        else
+            System.out.println("Kunde ej lägga till ny hobby!");
+    } // addHobby
+
+    public void deleteHobby(Object o){
+        HashMap<String, Data> recs = db.getRecords(HobbyTable.TABLE_NAME);
+        recs.forEach((k, v) -> System.out.println(v));
+
+        Scanner scan = new Scanner(System.in);
+        String hobby = scan.nextLine();
+
+        ArrayList<Data> res = db.search(HobbyTable.TABLE_NAME, Hobby.NAME, hobby);
+        if (res.size() == 1) {
+            if (db.deleteRecord(res.get(0)))
+                System.out.println("Hobbyn raderad");
+            else
+                System.out.print(String.format("Hobby '%s' kunde ej raderas", hobby));
+        } // if res...
+        else
+            System.out.println("Hobbyn finns inte");
+    } // deleteHobby
 
     public void adminAddLocation(Object o) {
         Scanner scan = new Scanner(System.in);
@@ -225,4 +218,5 @@ public class UDate {
 
     public void methodPlaceholder(Object o) {
     }
-}
+} // class UDate
+

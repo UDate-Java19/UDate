@@ -1,5 +1,6 @@
 package com.udate.fs;
 
+import com.udate.udate.fs.Like;
 import com.udate.udate.fs.User;
 
 import java.io.File;
@@ -135,5 +136,6 @@ public abstract class Data {
         System.out.println("data.delete = " + fileName);
         return file.delete();
     } // delete
+
 } // class Data
 

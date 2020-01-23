@@ -4,7 +4,8 @@ package com.udate.udate.fs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+        import java.util.HashMap;
+        import java.util.List;
 
 public class User extends Data {
 
@@ -125,9 +126,41 @@ public class User extends Data {
         getData().put(User.AGE, age);
     }
 
+    public void likeUser(UDateDB db, User loggedInUser){
+
+        Like like = new Like("", loggedInUser.getID(), getID());
+        db.addRecord(like);
+        System.out.printf("You ♥ %s", getUsername());
+    }
+
+    public void likeBack(Like lp) {
+
+        if ((lp.getLikedBack()).equals("1")){
+            System.out.println("You guys already ♥ each other.");
+        }
+        else {
+            lp.setLikedBack("1");
+            lp.save();
+            System.out.println("You guys ♥ each other!");
+        }
+    }
+
+    public Like hasLikedMe(UDateDB db, User loggedInUser) {
+
+        ArrayList<Data> likePosts = db.search(LikeTable.TABLE_NAME, Like.LIKES_USER_ID, loggedInUser.getID());
+
+        for (Data lp : likePosts) {
+            if (((Like) lp).getUserId().equals(getID())) {
+                return (Like) lp;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return String.format("User{Username: %s, Name: %s, Sex: %s, Age: %s, Email: %s, City: %s, Hobbies: %s.}",
                 getUsername(), getName(), getGender(), getAge(), getEmail(), getCity(), getHobbies());
     }
+
 }

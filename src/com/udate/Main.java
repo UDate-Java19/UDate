@@ -5,16 +5,7 @@ package com.udate;
 *
 * */
 
-import com.udate.fs.Data;
 import com.udate.udate.UDate;
-import com.udate.udate.Matching;
-
-import com.udate.udate.fs.*;
-import com.udate.udate.menu.Menu;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,8 +20,8 @@ public class Main {
 //        HobbyTable hobbyTable = new HobbyTable();
 //        LocationTable locationTable = new LocationTable();
 
-//        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
-//        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
+        //HashMap<String,Data> res = db.getRecords(UserTable.TABLE_NAME);
+         User loggedInUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "amaggi8").get(0);
 
 //        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Malmö",
 //                "johanna@gmail.com", "hobby/1579177328157.row","Male", "44")))
