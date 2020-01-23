@@ -4,6 +4,7 @@ import com.udate.fs.Data;
 import com.udate.udate.fs.*;
 import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
+import com.udate.udate.menu.ProfileMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class UDate {
     private void addHobbies() {
     }
 
-    private void searchUser() {
+    public void searchUser() {
     }
 
     private void deleteLocation() {
@@ -179,6 +180,42 @@ public class UDate {
     } // deleteHobby
 
     public void methodPlaceholder(Object o) {
+    }
+
+    public void likeThisUser(Object o) {
+
+        User likedUser = (User) o;
+        Like lp = loggedinUser.hasLikedMe(db, likedUser);
+
+        if (lp != null){
+            System.out.printf("%nDu har redan ♥ %s.%n", likedUser.getUsername());
+        }
+        else {
+
+            lp = likedUser.hasLikedMe(db, loggedinUser);
+
+            if (lp != null) {
+                likedUser.likeBack(lp);
+            } else {
+                likedUser.likeUser(db, loggedinUser);
+            }
+        }
+    }
+
+    public void searchUser(Object o) {
+       Scanner scanny = new Scanner(System.in);
+        System.out.println("Sök användarnamn: ");
+        String username = scanny.nextLine();
+        ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
+
+        if(result.size() > 0){
+            //HashMap<String, String> resolvedData = db.getResolvedData((User)result.get(0));
+            //hobbies ska printas i klartext
+            System.out.println(result);
+            ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
+            pm.handleMenu();
+        }
+        System.out.printf("%nHittade ingen vid detta användarnamn.");
     }
 } // class UDate
 

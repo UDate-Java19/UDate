@@ -3,7 +3,7 @@ import com.udate.fs.Data;
 
 public class Like extends Data {
 
-    public static final String USER_ID = "id";
+    public static final String USER_ID = "userId";
     public static final String LIKES_USER_ID = "likedUserId";
     public static final String LIKED_BACK = "likedBack";
 

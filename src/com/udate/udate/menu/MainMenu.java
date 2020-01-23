@@ -55,8 +55,8 @@ public class MainMenu extends Menu {
         userProfileMenu.add(new MenuChoice("Radera", '2', p::methodPlaceholder));
         userProfileMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
 
-        userListMenu.add(new MenuChoice("Sök användare", '1', p::methodPlaceholder, null));
-        userListMenu.add(new MenuChoice("Lista användare", '2', p::methodPlaceholder, null));
+        userListMenu.add(new MenuChoice("Sök användare", '1', p::searchUser, null));
+        userListMenu.add(new MenuChoice("Lista användare i din stad", '2', p::methodPlaceholder, null));
         userListMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
 
         userLikesMenu.add(new MenuChoice("Se vilka jag gillat", '1', p::methodPlaceholder, null));
