@@ -46,7 +46,7 @@ public class MainMenu extends Menu {
         adminLocationsMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
 
         userMenu.add(new MenuChoice("Hantera profil", '1', this::setMenu, userProfileMenu));
-        userMenu.add(new MenuChoice("Andra användare", '2', p::methodPlaceholder));
+        userMenu.add(new MenuChoice("Hitta datingpartner", '2', this::setMenu, userListMenu));
         userMenu.add(new MenuChoice("Se matchningar", '3', p::methodPlaceholder));
         userMenu.add(new MenuChoice("Se gilla-markeringar", '3', p::methodPlaceholder));
         userMenu.add(new MenuChoice("Logga ut", '0', this::logout, p));
@@ -66,10 +66,6 @@ public class MainMenu extends Menu {
 
         currentMenu = mainMenu;
     }
-
-    private void setMenu(Object o) {
-        currentMenu = (ArrayList<MenuChoice>) o;
-    }//showMainMenu
 
     private void createUser(Object o){
         if (((UDate)o).registerUser(true))
