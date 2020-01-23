@@ -21,14 +21,9 @@ public class UDate {
         m = new MainMenu(this);
    }
 
-
-    public UDate() {
-        createTables();
-    }
-
     public void run() {
-
-       m.handleMenu();
+        // run the main menu
+        m.handleMenu();
     } // run
 
     private void addLocations() {
