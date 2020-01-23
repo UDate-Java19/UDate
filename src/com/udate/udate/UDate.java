@@ -186,14 +186,32 @@ public class UDate {
 
     public void adminAddLocation(Object o) {
         Scanner scan = new Scanner(System.in);
-        System.out.print("Skriv en plats du vill lägga till: ");
+        System.out.print("Skriv en plats du vill ta bort: ");
         String location = scan.nextLine();
         System.out.println("Skriv in adressen: ");
         String address = scan.nextLine();
 
         Location newLocation = new Location("", location, address);
         if (!db.addRecord(newLocation))
-            System.out.println("Fel vid sparning av användare");
+            System.out.println("Fel vid tillägg av en plats..");
+        else{
+            System.out.println("Platsen blev tillagd!");
+        }
+    }
+
+    public void adminDeleteLocation(Object o) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Ange en plats du vill ta bort: ");
+        String deleteLocation = scan.nextLine();
+
+        ArrayList<Data> res = db.search(LocationTable.TABLE_NAME, Location.NAME, deleteLocation);
+        if (res.size() == 1) {
+            if (db.deleteRecord(res.get(0)))
+                System.out.println(String.format("Plats %s raderad", deleteLocation));
+            else
+                System.out.print(String.format("Plats %s kunde ej raderas", deleteLocation));
+        }
+        else System.out.println("Plats finns inte");
     }
 
     public void methodPlaceholder(Object o) {

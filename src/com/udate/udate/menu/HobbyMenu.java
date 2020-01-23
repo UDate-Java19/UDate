@@ -14,8 +14,8 @@ public class HobbyMenu {
     public HobbyMenu(UDate p) {
         mainMenu = new ArrayList<MenuChoice>();
 
-        mainMenu.add(new MenuChoice("Lägg till en hobby", '1', p::addHobby));
-        mainMenu.add(new MenuChoice("Ta bort hobby", '2', p::removeHobby));
+        mainMenu.add(new MenuChoice("Lägg till en hobby", '1', p::methodPlaceholder));
+        mainMenu.add(new MenuChoice("Ta bort hobby", '2', p::methodPlaceholder));
         mainMenu.add(new MenuChoice("Tillbaka", '0', null));
     }
     private void printMenu() {
