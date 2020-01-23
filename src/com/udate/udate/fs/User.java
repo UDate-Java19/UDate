@@ -120,38 +120,34 @@ public class User extends Data {
 
     public void likeUser(UDateDB db, User loggedInUser){
 
-        Like like = new Like(loggedInUser.getID(), ID);
+        Like like = new Like("", loggedInUser.getID(), getID());
         db.addRecord(like);
-
-        //User user = (User) db.getRecords(UserTable.TABLE_NAME).get(12);
-       // ArrayList<Data> users = db.search(User.NAME, "Johanna");
-        //User likedUser = (User)users.get(0);
-
-
-
-
+        System.out.printf("You ♥ %s", getUsername());
     }
 
     public void likeBack(Like lp) {
-        lp.setLikedBack("1");
-        lp.save();
+
+        if ((lp.getLikedBack()).equals("1")){
+            System.out.println("You guys already ♥ each other.");
+        }
+        else {
+            lp.setLikedBack("1");
+            lp.save();
+            System.out.println("You guys ♥ each other!");
+        }
     }
 
     public Like hasLikedMe(UDateDB db, User loggedInUser) {
-        //check first if there are ANY like posts including my id
+
         ArrayList<Data> likePosts = db.search(LikeTable.TABLE_NAME, Like.LIKES_USER_ID, loggedInUser.getID());
-        //then loop through the list of results
-        //check if Like user_id = likedUser
+
         for (Data lp : likePosts) {
-            if (((Like) lp).getID().equals(ID)) {
+            if (((Like) lp).getUserId().equals(getID())) {
                 return (Like) lp;
             }
         }
         return null;
-
     }
-
-
 
     @Override
     public String toString() {
