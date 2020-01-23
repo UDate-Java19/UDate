@@ -47,24 +47,6 @@ public class User extends Data {
         return true;
     } // load
 
-    @Override
-    public String getFolderName() {
-        return UserTable.TABLE_NAME;
-    } // getFolderName
-
-    public User(String fileName) {
-        super(fileName);
-    }
-
-    @Override
-    public boolean load() {
-        super.load();
-
-        String[] split = getData().get(User.HOBBIES).split(",");
-        this.hobbies = new ArrayList<String>(Arrays.asList(split));
-        return true;
-    } // load
-
     public void addHobby(String hobby){
         hobbies.add(hobby);
         getData().put(User.HOBBIES, hobbies.toString());
