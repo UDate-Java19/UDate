@@ -35,7 +35,7 @@ public class Menu {
 
         mainMenu.add(new MenuChoice("Logga in admin", '1', this::loginAdmin, p));
         mainMenu.add(new MenuChoice("Logga in användare", '2', this::loginUser, p));
-        mainMenu.add(new MenuChoice("Registrera ny användare", '3', p::registerUser));
+        mainMenu.add(new MenuChoice("Registrera ny användare", '3', this::createUser, p));
         mainMenu.add(new MenuChoice("Avsluta", '0', null));
 
         adminMenu.add(new MenuChoice("Hantera användare", '1', this::setMenu, adminUsersMenu));
@@ -43,7 +43,7 @@ public class Menu {
         adminMenu.add(new MenuChoice("Hantera platser", '3', this::setMenu, adminLocationsMenu));
         adminMenu.add(new MenuChoice("Logga ut", '0', this::logoutAdmin, p));
 
-        adminUsersMenu.add(new MenuChoice("Lägg till användare", '1', p::methodPlaceholder));
+        adminUsersMenu.add(new MenuChoice("Lägg till användare", '1', this::createUserAsAdmin, p));
         adminUsersMenu.add(new MenuChoice("Ta bort användare", '2', p::methodPlaceholder));
         adminUsersMenu.add(new MenuChoice("Redigera användare", '3', p::methodPlaceholder));
         adminUsersMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
@@ -83,6 +83,14 @@ public class Menu {
     private void setMenu(Object o) {
         currentMenu = (ArrayList<MenuChoice>) o;
     }//showMainMenu
+
+    private void createUser(Object o){
+        if (((UDate)o).registerUser(true))
+            setMenu(userMenu);
+    }
+    private void createUserAsAdmin(Object o){
+        ((UDate)o).registerUser(false);
+    }
 
     private void logout(Object o){
         ((UDate)o).logOutUser();

@@ -39,10 +39,6 @@ public class User extends Data {
         setAge(age);
     }
 
-    @Override
-    public boolean load() {
-        super.load();
-
         String[] split = getData().get(User.HOBBIES).split(",");
         this.hobbies = new ArrayList<String>(Arrays.asList(split));
         return true;
