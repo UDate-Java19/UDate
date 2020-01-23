@@ -53,7 +53,7 @@ public class Menu {
         adminHobbiesMenu.add(new MenuChoice("Redigera hobby", '3', p::methodPlaceholder));
         adminHobbiesMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
 
-        adminLocationsMenu.add(new MenuChoice("Lägg till plats", '1', p::methodPlaceholder));
+        adminLocationsMenu.add(new MenuChoice("Lägg till plats", '1', p::adminAddLocation));
         adminLocationsMenu.add(new MenuChoice("Ta bort plats", '2', p::methodPlaceholder));
         adminLocationsMenu.add(new MenuChoice("Redigera plats", '3', p::methodPlaceholder));
         adminLocationsMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
