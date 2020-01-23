@@ -6,42 +6,31 @@ package com.udate;
 * */
 
 import com.udate.fs.Data;
+import com.udate.udate.UDate;
+import com.udate.udate.Matching;
+
 import com.udate.udate.fs.*;
+import com.udate.udate.menu.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
-        UDateDB db = new UDateDB();
+        UDate prog = new UDate();
+        prog.run();
 
-        //ArrayList<Data> users = userTable.search(User.NAME, "Johanna");
+//        UDateDB db = new UDateDB();
 
-        //HashMap<String,Data> res = db.getRecords(UserTable.TABLE_NAME);
-         User loggedInUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "amaggi8").get(0);
-
-        User likedUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "g-man").get(0);
-        //db.addRecord(new Like(loggedInUser.getID(),likedUser.getID()));
-
-        Like lp = likedUser.hasLikedMe(db, loggedInUser);
-        if (lp != null) {
-            likedUser.likeBack(lp);
-        } else {
-            likedUser.likeUser(db, loggedInUser);
-        }
-
-        db.getRecords("like");
-
-
-        // User user = (User)users.get(0);
 
 
 //        UserTable userTable = new UserTable();
 //        HobbyTable hobbyTable = new HobbyTable();
 //        LocationTable locationTable = new LocationTable();
 
-//        userTable.addReference(new Reference(hobbyTable, User.HOBBIES, Data.ID, Hobby.NAME));
-//        hobbyTable.addReference(new Reference(locationTable, Hobby.LOCATIONS, Data.ID, Location.NAME));
+        //HashMap<String,Data> res = db.getRecords(UserTable.TABLE_NAME);
+         User loggedInUser = (User) db.search(UserTable.TABLE_NAME, User.USERNAME, "amaggi8").get(0);
 
 //        if (!db.addRecord(new User( "Kent Kovalent", "Kentaq", "Malmö",
 //                "johanna@gmail.com", "hobby/1579177328157.row","Male", "44")))
@@ -61,15 +50,15 @@ public class Main {
 //
 //            HashMap<String, String> resolvedData = db.getResolvedData((User)users.get(0));
 //            System.out.println("Hobbies i klartext:  " + resolvedData);
-//
-////            if (!db.deleteRecord(users.get(0)))
-////                System.out.println("Det gick inte att radera posten " + users.get(0));
-////            else
-////                System.out.println("Post raderad!");
+
+//            if (!db.deleteRecord(users.get(0)))
+//                System.out.println("Det gick inte att radera posten " + users.get(0));
+//            else
+//                System.out.println("Post raderad!");
 //        } // if users...
 //        else
 //            System.out.println("Hittade ej Johanna!");
-//
+
 //        db.getRecords(HobbyTable.TABLE_NAME).forEach((k, v) -> {
 //            System.out.println(v + " " + db.getResolvedData((Hobby)v));
 //        });
