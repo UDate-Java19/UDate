@@ -2,14 +2,21 @@ package com.udate.udate.fs;
 
 import com.udate.fs.Data;
 
-public class Location extends Data {
+import java.util.HashMap;
 
+public class Location extends Data {
     public final static String NAME = "name";
     public final static String ADDRESS = "address";
 
     public Location(String fileName) {
         super(fileName);
     }
+
+    public Location(HashMap<String, String> hm){
+        super("");
+        setName(hm.get(NAME));
+        setAddress(hm.get(ADDRESS));
+    } // Location
 
     public Location(String fileName, String name, String address){
         super(fileName);

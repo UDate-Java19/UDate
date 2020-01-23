@@ -6,6 +6,8 @@ import java.util.Scanner;
 abstract public class Menu {
     protected ArrayList<MenuChoice> currentMenu;
 
+    abstract public ArrayList<MenuChoice> setInitialMenu();
+
     protected void setMenu(Object o) {
         currentMenu = (ArrayList<MenuChoice>) o;
     } // setMenu
@@ -37,11 +39,13 @@ abstract public class Menu {
     } // getMenuChoice
 
     public void handleMenu() {
-        boolean bStop = false;
-        String sChoice;
+        currentMenu = setInitialMenu();
+
         MenuChoice m;
+        boolean bStop = false;
         while (!bStop) {
             printMenu();
+
             m = getMenuChoice();
             if (m == null)
                 System.out.println("Felaktigt val, försök igen!");

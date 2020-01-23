@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +19,6 @@ public abstract class Data {
 
     private String fileName = "";
     private HashMap<String, String> data = new HashMap<>();;
-//    private String folderName;
 
     public abstract String getFolderName();
 
@@ -28,13 +28,6 @@ public abstract class Data {
         else
             this.fileName = String.format("%s/%s", getFolderName(), fileName);
     }
-
-//    public Data(String folderName, String fileName) {
-//    } // Data:Data
-
-//    public void setFolderName(String folderName) {
-//        this.folderName = folderName;
-//    }
 
     public String getFileName() {
         return fileName;
@@ -48,7 +41,7 @@ public abstract class Data {
         return (String)data.get(ID);
     }
 
-    public HashMap<String, String> getResolvedData(HashMap references) {
+    public HashMap<String, String> getResolvedDataHM(HashMap references) {
 
         HashMap <String, String> newData = (HashMap<String, String>) data.clone();
 
@@ -71,10 +64,16 @@ public abstract class Data {
         StringBuilder newList = new StringBuilder();
 
         for (String s : keyList){
-            if (!s.equals("")){
-                Data refData = ref.getRefTable().search(ref.getRefKey(), s).get(0);
-                newList.append(refData.getData().get(ref.getRefTextKey()));
-                newList.append(",");
+            if (s != null && !s.equals("")){
+                ArrayList<Data> res = ref.getRefTable().search(ref.getRefKey(), s);
+
+                if (res.size() > 0) {
+                    Data refRecord = res.get(0);
+                    if (refRecord != null) {
+                        newList.append(refRecord.getData().get(ref.getRefTextKey()));
+                        newList.append(",");
+                    } // if refData...
+                } // if res...
             } // if !s...
         } // for s...
 
@@ -136,6 +135,5 @@ public abstract class Data {
         System.out.println("data.delete = " + fileName);
         return file.delete();
     } // delete
-
 } // class Data
 

@@ -10,6 +10,7 @@ import com.udate.fs.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Hobby extends Data {
@@ -23,6 +24,13 @@ public class Hobby extends Data {
     public Hobby(String fileName) {super(fileName); }
 
 //    public Hobby(String folderName, String fileName) {super(folderName, fileName); }
+
+    public Hobby(HashMap<String, String> hm){
+        super("");
+        setName(hm.get(NAME));
+        setDescription(hm.get(DESCRIPTION));
+        setLocations(hm.get(LOCATIONS));
+    } // Hobby
 
     public Hobby(String name, String description, String locations){
         this("", name, description, locations);
@@ -78,7 +86,6 @@ public class Hobby extends Data {
 
     @Override
     public String toString() {
-        return String.format("Hobby{Name: %s, Locations: %s, Description: %s.}",
-        getName(), getLocations(), getDescription());
+        return String.format("Hobby: %s%nBeskrivning: %s%nPlatser: %s", getName(), getDescription(), getLocations());
     }
 }

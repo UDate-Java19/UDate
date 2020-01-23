@@ -15,6 +15,7 @@ abstract public class Table {
     private HashMap<String, Reference> references = new HashMap<>();
 
     abstract public Data createDataObject(String fileName);
+    abstract public Data createDataObject(HashMap<String, String> hm);
 
     public Table (String name){
         this.name = name;
@@ -38,8 +39,7 @@ abstract public class Table {
 
             result.forEach(fileName -> {
                     Data data = createDataObject(fileName);
-//                    data.setFolderName(name);
-                    System.out.println("i table loadRecords, data.filename = " + data.getFileName() + " ,filename=" + fileName);
+//                    System.out.println("i table loadRecords, data.filename = " + data.getFileName() + " ,filename=" + fileName);
                     data.load();
                     this.dataMap.put(data.getFileName(), data);
             });
@@ -51,7 +51,7 @@ abstract public class Table {
 
    public boolean delete(){
        File file = new File(name);
-       System.out.println("data.delete = " + name);
+//       System.out.println("data.delete = " + name);
        return file.delete();
    } // delete
 
@@ -114,7 +114,11 @@ abstract public class Table {
         return name;
     }
 
-    public HashMap<String, String> getResolvedData(Data data){
-        return data.getResolvedData(references);
+    public HashMap<String, String> getResolvedDataRaw(Data data){
+        return data.getResolvedDataHM(references);
+    } // getResolvedData
+
+    public Data getResolvedData(Data data){
+        return createDataObject(getResolvedDataRaw(data));
     } // getResolvedData
 } // class Table

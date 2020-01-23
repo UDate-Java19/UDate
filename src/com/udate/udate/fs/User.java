@@ -23,6 +23,17 @@ public class User extends Data {
         super(fileName);
     }
 
+    public User(HashMap<String, String> hm){
+        super("");
+        setName(hm.get(NAME));
+        setUsername(hm.get(USERNAME));
+        setCity(hm.get(CITY));
+        setEmail(hm.get(EMAIL));
+        setHobbies(hm.get(HOBBIES));
+        setGender(hm.get(GENDER));
+        setAge(hm.get(AGE));
+    } // User
+
     public User(String name, String userName, String city, String email,
                 String hobbies, String gender, String age) {
         this("", name, userName, city, email, hobbies, gender, age);
@@ -42,21 +53,26 @@ public class User extends Data {
     @Override
     public boolean load() {
         super.load();
+        this.hobbies = new ArrayList<String>();
 
-        String[] split = getData().get(User.HOBBIES).split(",");
-        this.hobbies = new ArrayList<String>(Arrays.asList(split));
+        String temp = getData().get(User.HOBBIES);
+        if (!temp.equals("")) {
+            String[] split = temp.split(",");
+            if (split.length > 0)
+                this.hobbies = new ArrayList<String>(Arrays.asList(split));
+        }
         return true;
     } // load
 
     public void addHobby(String hobby){
         hobbies.add(hobby);
-        getData().put(User.HOBBIES, hobbies.toString());
-    }
+        getData().put(User.HOBBIES, hobbies.toString().replace("[", "").replace("]",""));
+    } // addHobby
 
     public void removeHobby(String hobby){
         hobbies.remove(hobby);
-        getData().put(User.HOBBIES, hobbies.toString());
-    }
+        getData().put(User.HOBBIES, hobbies.toString().replace("[", "").replace("]",""));
+    } // removeHobby
 
     @Override
     public String getFolderName() {
@@ -112,9 +128,16 @@ public class User extends Data {
     }
 
     public void setHobbies(String hobbies) {
+        this.hobbies = new ArrayList<String>();
+
+        hobbies = hobbies.replace("[", "").replace("]", "");
         getData().put(User.HOBBIES, hobbies);
-        String[] split = hobbies.split(",");
-        this.hobbies = new ArrayList<String>(Arrays.asList(split));//(ArrayList<String>) Arrays.asList(split);
+
+        if (!hobbies.equals("")) {
+            String[] split = hobbies.split(",");
+            if (split.length > 0)
+                this.hobbies = new ArrayList<String>(Arrays.asList(split));
+        } // if !hobbies
     } // setHobbies
 
     public void setGender(String sex){
@@ -158,9 +181,7 @@ public class User extends Data {
 
     @Override
     public String toString() {
-
         return String.format("%s, %nNamn: %s %nKön: %s %nÅlder: %s %nEmail: %s %nStad: %s %nHobbies: %s",
-                getUsername(), getName(), getGender(), getAge(), getEmail(), getCity(), getHobbyList());
-    }
-
-}
+                getUsername(), getName(), getGender(), getAge(), getEmail(), getCity(), getHobbies());
+    } // toString
+} // class User
