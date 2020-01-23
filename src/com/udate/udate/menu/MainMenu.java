@@ -40,9 +40,9 @@ public class MainMenu extends Menu {
         adminHobbiesMenu.add(new MenuChoice("Redigera hobby", '3', p::methodPlaceholder));
         adminHobbiesMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
 
-        adminLocationsMenu.add(new MenuChoice("Lägg till plats", '1', p::methodPlaceholder));
-        adminLocationsMenu.add(new MenuChoice("Ta bort plats", '2', p::methodPlaceholder));
-        adminLocationsMenu.add(new MenuChoice("Redigera plats", '3', p::methodPlaceholder));
+        adminLocationsMenu.add(new MenuChoice("Lägg till plats", '1', p::adminAddLocation));
+        adminLocationsMenu.add(new MenuChoice("Ta bort plats", '2', p::adminDeleteLocation));
+        adminLocationsMenu.add(new MenuChoice("Redigera plats", '3', p::adminEditLocation));
         adminLocationsMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
 
         userMenu.add(new MenuChoice("Hantera profil", '1', this::setMenu, userProfileMenu));

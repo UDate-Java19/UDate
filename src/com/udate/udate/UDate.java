@@ -216,6 +216,9 @@ public class UDate {
         else System.out.println("Plats finns inte");
     }
 
+    public void adminEditLocation(Object o){
+
+    }
     public void methodPlaceholder(Object o) {
     }
 } // class UDate
