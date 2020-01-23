@@ -172,11 +172,16 @@ public class UDate {
 
     public void removeUserAsAdmin(Object o){
         Scanner scan = new Scanner(System.in);
-        System.out.print("Ange ett användarnamn att radera:");
+        System.out.print("Ange ett användarnamn att radera: ");
         String deleteUser = scan.nextLine();
         ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, deleteUser);
         if (res.size() == 1) {
+            if (db.deleteRecord(res.get(0)))
+                System.out.println(String.format("Användare %s raderad", deleteUser));
+            else
+                System.out.print(String.format("Användare %s kunde ej raderas", deleteUser));
         }
+        else System.out.println("Användare finns inte");
     }
 
     public void methodPlaceholder(Object o) {

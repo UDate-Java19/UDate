@@ -44,8 +44,7 @@ public class Menu {
         adminMenu.add(new MenuChoice("Logga ut", '0', this::logoutAdmin, p));
 
         adminUsersMenu.add(new MenuChoice("Lägg till användare", '1', this::createUserAsAdmin, p));
-        adminUsersMenu.add(new MenuChoice("Ta bort användare", '2', p::methodPlaceholder));
-        adminUsersMenu.add(new MenuChoice("Redigera användare", '3', p::methodPlaceholder));
+        adminUsersMenu.add(new MenuChoice("Ta bort användare", '2', p::removeUserAsAdmin));
         adminUsersMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, adminMenu));
 
         adminHobbiesMenu.add(new MenuChoice("Lägg till hobby", '1', p::methodPlaceholder));
