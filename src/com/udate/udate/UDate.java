@@ -107,6 +107,11 @@ public class UDate {
         loggedinUser = null;
     }
 
+    public void logOutAdmin() {
+        System.out.println("Admin är nu utloggad - tack och hej!");
+        adminOnline = false;
+    } // logoutAdmin
+
     public void registerUser(Object o) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Var god att ange ett användarnamn:");
@@ -117,16 +122,18 @@ public class UDate {
             return;
         }
 
-        System.out.print("Var god att ange ditt namn:");
+        System.out.print("Var god att ange ditt namn: ");
         String name = scan.nextLine();
-        System.out.print("Var god att ange din stad:");
+        System.out.print("Var god att ange din stad: ");
         String city = scan.nextLine();
-        System.out.print("Var god att ange din email:");
+        System.out.print("Var god att ange din email: ");
         String email = scan.nextLine();
-        System.out.print("Var god att ange ditt kön:");
+        System.out.print("Var god att ange ditt kön: ");
         String gender = scan.nextLine();
-        System.out.print("Var god att ange din ålder:");
+        System.out.print("Var god att ange din ålder: ");
         String age = scan.nextLine();
+
+//        addHobbies();
 
         if(!db.addRecord(new User(name, userName, city, email, "", gender, age)))
             System.out.println("Fel vid sparning av användare");
@@ -156,5 +163,4 @@ public class UDate {
 
     public void methodPlaceholder(Object o) {
     }
-
 }
