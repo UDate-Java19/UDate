@@ -21,11 +21,6 @@ public class UDate {
         m = new MainMenu(this);
    }
 
-
-    public UDate() {
-        createTables();
-    }
-
     public void run() {
         // run the main menu
         m.handleMenu();
