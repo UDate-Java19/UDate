@@ -388,5 +388,22 @@ public class UDate {
             System.out.println("\nIngen som inte du också har gillat, gillar dig än!\n");
         }
     }
+    public void listUsersInMyCity(Object o) {
+
+        ArrayList<Data> foundUsers = db.search(UserTable.TABLE_NAME, User.CITY, loggedinUser.getCity());
+
+        if (foundUsers.size() > 0) {
+            System.out.printf("%nHär är användare i din stad:%n");
+
+            for (Data up : foundUsers) {
+                String username = (((User) up).getUsername());
+                if(username != loggedinUser.getUsername())
+                System.out.println(username);
+            }
+            System.out.println();
+        } else System.out.printf("%nTyvärr hittade vi inga användare i din stad. Men UDate växer för varje dag!");
+    }
+
+
 } // class UDate
 
