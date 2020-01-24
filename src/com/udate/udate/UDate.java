@@ -335,7 +335,9 @@ public class UDate {
     public void viewMatches(Object o){
         Matching a = new Matching(loggedinUser, (UserTable) db.getTable(UserTable.TABLE_NAME));
         HashMap<User, Integer> matchingList = a.doMatch();
-        matchingList.forEach((k, v) -> System.out.println(v));
+        System.out.println("Matchnings-");
+        System.out.println("Rank          UserName");
+        matchingList.forEach((k, v) -> System.out.println((v) + "             " + k.getUsername()));
     }
 
     public void viewMyLikes(Object o) {
