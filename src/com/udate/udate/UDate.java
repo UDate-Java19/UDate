@@ -28,18 +28,13 @@ public class UDate {
         // run the main menu
         m.handleMenu();
     } // run
-
-    private void addLocations() {
-    }
-
+    
     private void addHobbies() {
     }
 
     public void searchUser() {
     }
 
-    private void deleteLocation() {
-    }
 
     private void editHobby() {
     }
@@ -235,6 +230,71 @@ public class UDate {
         else
             System.out.println("Hobbyn finns inte");
     } // editHobby
+
+    public void adminAddLocation(Object o) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Skriv en plats du vill lägga till: ");
+        String location = scan.nextLine();
+        System.out.println("Skriv in adressen: ");
+        String address = scan.nextLine();
+
+        Location newLocation = new Location("", location, address);
+        if (!db.addRecord(newLocation))
+            System.out.println("Fel vid tillägg av en plats..");
+        else{
+            System.out.println("Platsen blev tillagd!");
+        }
+    }
+
+    public void adminDeleteLocation(Object o) {
+        HashMap<String, Data> recs = db.getRecords(LocationTable.TABLE_NAME);
+        recs.forEach((k, v) ->System.out.println(v));
+
+        Scanner scan = new Scanner(System.in);
+        System.out.printf("Ange en plats du vill ta bort: ");
+        String deleteLocation = scan.nextLine();
+
+        ArrayList<Data> res = db.search(LocationTable.TABLE_NAME, Location.NAME, deleteLocation);
+        if (res.size() > 0) {
+            System.out.print("Det finns " + res.size() + " plats(er). Vill du verkligen radera? (Ja/Nej)");
+            if (scan.nextLine().equals("Ja")) {
+                for (Data d : res) {
+                    if (db.deleteRecord(d))
+                        System.out.print(String.format("Plats %s raderad", deleteLocation));
+                    else
+                        System.out.print(String.format("Plats %s kunde ej raderas", deleteLocation));
+                }
+            }
+        }
+        else System.out.println("Platsen finns inte");
+    }
+
+    public void adminEditLocation(Object o){
+            HashMap<String, Data> recs = db.getRecords(LocationTable.TABLE_NAME);
+            recs.forEach((k, v) -> System.out.println(v));
+
+            System.out.print("Ange plats att redigera: ");
+            Scanner scan = new Scanner(System.in);
+            String location = scan.nextLine();
+
+            ArrayList<Data> res = db.search(LocationTable.TABLE_NAME, Location.NAME, location);
+            if (res.size() == 1) {
+                Location locationRec = (Location)res.get(0);
+
+                System.out.printf("Ange namn på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getName());
+                String name = scan.nextLine();
+                if (!name.equals(""))
+                    locationRec.setName(name);
+
+                System.out.printf("Ange addressen på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getAddress());
+                String address = scan.nextLine();
+                if (!address.equals(""))
+                    locationRec.setAddress(address);
+                locationRec.save();
+            } // if res...
+            else
+                System.out.println("Platsen finns inte");
+        } // editLocation
 
     public void methodPlaceholder(Object o) {
     }

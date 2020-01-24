@@ -50,6 +50,7 @@ public class User extends Data {
         setGender(gender);
         setAge(age);
     }
+
     @Override
     public boolean load() {
         super.load();
