@@ -370,7 +370,6 @@ public class UDate {
 
     public void methodPlaceholder(Object o) {
     }
->>>>>>>>> Temporary merge branch 2
 
     public void likeThisUser(Object o) {
 
