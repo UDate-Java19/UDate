@@ -1,7 +1,6 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
-import com.udate.fs.Table;
 import com.udate.udate.fs.*;
 import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
@@ -30,16 +29,6 @@ public class UDate {
         // run the main menu
         m.handleMenu();
     } // run
-
-    private void addHobbies() {
-    }
-
-    public void searchUser() {
-    }
-
-
-    private void editHobby() {
-    }
 
     public boolean loginUser() {
         Scanner scan = new Scanner(System.in);

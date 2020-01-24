@@ -3,7 +3,6 @@ package com.udate.udate.menu;
 import com.udate.udate.UDate;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MainMenu extends Menu {
 
