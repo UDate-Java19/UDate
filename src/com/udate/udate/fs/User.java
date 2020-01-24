@@ -119,7 +119,7 @@ public class User extends Data {
             getData().put(User.USERNAME, userName);
     }
 
-    private void setCity(String city) {
+    public void setCity(String city) {
             getData().put(User.CITY, city);
     }
 

@@ -97,4 +97,9 @@ public class MainMenu extends Menu {
         if (((UDate)o).loginUser())
             setMenu(userMenu);
     } // loginUser
+
+    private void removeLoggedUser(Object o){
+        if (((UDate)o).removeLoggedUser())
+            setMenu(mainMenu);
+    }
 } // class Menu
