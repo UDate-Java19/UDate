@@ -268,8 +268,24 @@ public class UDate {
             System.out.println(db.getResolvedData((User)result.get(0)));
             ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
             pm.handleMenu();
-        } else
-            System.out.printf("%nHittade ingen med detta användarnamn.");
-    } // searchUser
+        }
+        System.out.printf("%nHittade ingen vid detta användarnamn.");
+    }
+
+    public void viewMyLikes(Object o) {
+        ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, User.ID, loggedinUser.getID());
+
+        for (Data lp : result) {
+            String likedUserId = ((Like) lp).getLikedUserId();
+            String userName = getUserNameFromId(likedUserId);
+            System.out.println(userName);
+        }
+
+    }
+
+    private String getUserNameFromId(String id) {
+        ArrayList<Data> user = db.search(UserTable.TABLE_NAME, User.ID,id);
+        return ((User) user.get(0)).getUsername();
+    }
 } // class UDate
 
