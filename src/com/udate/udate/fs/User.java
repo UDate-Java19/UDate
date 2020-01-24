@@ -1,11 +1,11 @@
 package com.udate.udate.fs;
 
-        import com.udate.fs.Data;
+import com.udate.fs.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-        import java.util.HashMap;
-        import java.util.List;
+import java.util.HashMap;
+import java.util.List;
 
 public class User extends Data {
 
@@ -55,7 +55,7 @@ public class User extends Data {
         super.load();
         this.hobbies = new ArrayList<String>();
 
-        String temp = getData().get(User.HOBBIES);
+        String temp = getData().get(User.HOBBIES).trim();
         if (!temp.equals("")) {
             String[] split = temp.split(",");
             if (split.length > 0)
@@ -65,13 +65,13 @@ public class User extends Data {
     } // load
 
     public void addHobby(String hobby){
-        hobbies.add(hobby);
-        getData().put(User.HOBBIES, hobbies.toString().replace("[", "").replace("]",""));
+        hobbies.add(hobby.trim());
+        getData().put(User.HOBBIES, hobbies.toString().replace("[", "").replace("]","").replace(" ", ""));
     } // addHobby
 
     public void removeHobby(String hobby){
         hobbies.remove(hobby);
-        getData().put(User.HOBBIES, hobbies.toString().replace("[", "").replace("]",""));
+        getData().put(User.HOBBIES, hobbies.toString().replace("[", "").replace("]","").replace(" ", ""));
     } // removeHobby
 
     @Override
@@ -119,7 +119,7 @@ public class User extends Data {
             getData().put(User.USERNAME, userName);
     }
 
-    private void setCity(String city) {
+    public void setCity(String city) {
             getData().put(User.CITY, city);
     }
 
@@ -130,7 +130,7 @@ public class User extends Data {
     public void setHobbies(String hobbies) {
         this.hobbies = new ArrayList<String>();
 
-        hobbies = hobbies.replace("[", "").replace("]", "");
+        hobbies = hobbies.replace("[", "").replace("]", "").replace(" ", "");
         getData().put(User.HOBBIES, hobbies);
 
         if (!hobbies.equals("")) {
