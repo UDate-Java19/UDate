@@ -281,12 +281,12 @@ public class UDate {
             if (res.size() == 1) {
                 Location locationRec = (Location)res.get(0);
 
-                System.out.printf("Ange namn på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getName());
+                System.out.printf("Ange namn på platsen [%s]: ", locationRec.getName());
                 String name = scan.nextLine();
                 if (!name.equals(""))
                     locationRec.setName(name);
 
-                System.out.printf("Ange addressen på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getAddress());
+                System.out.printf("Ange addressen på platsen [%s]: ", locationRec.getAddress());
                 String address = scan.nextLine();
                 if (!address.equals(""))
                     locationRec.setAddress(address);
@@ -319,9 +319,9 @@ public class UDate {
     }
 
     public void searchUser(Object o) {
-        Scanner scanny = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         System.out.print("Sök användarnamn: ");
-        String username = scanny.nextLine();
+        String username = scan.nextLine();
 
         ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
         if (result.size() > 0){
@@ -330,6 +330,12 @@ public class UDate {
             pm.handleMenu();
         }
         System.out.printf("%nHittade ingen vid detta användarnamn.");
+    }
+
+    public void viewMatches(Object o){
+        Matching a = new Matching(loggedinUser, (UserTable) db.getTable(UserTable.TABLE_NAME));
+        HashMap<User, Integer> matchingList = a.doMatch();
+        matchingList.forEach((k, v) -> System.out.println(v));
     }
 
     public void viewMyLikes(Object o) {
