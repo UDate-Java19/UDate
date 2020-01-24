@@ -7,6 +7,7 @@ import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
 import com.udate.udate.menu.ProfileMenu;
 
+
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -57,7 +58,7 @@ public class UDate {
             return true;
         } // if res...
 
-        System.out.println("Fel lösenord - stick och brinn!");
+        System.out.println("Hmm, du har nog skrivit fel användarnamn. Testa logga in igen");
         return false;
     } // loginUser
 
@@ -214,6 +215,7 @@ public class UDate {
             System.out.println("Användaren finns inte");
     } // removeUserAsAdmin
 
+
     public void addHobby(Object o){
         Scanner scan = new Scanner(System.in);
 
@@ -284,8 +286,27 @@ public class UDate {
             System.out.println("Hobbyn finns inte");
     } // editHobby
 
-    public void methodPlaceholder(Object o) {
-    }
+    public boolean removeLoggedUser(){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Ange ditt användarnamn för att radera: ");
+        String deleteLoggedUser = scan.nextLine();
+        if (deleteLoggedUser.equals(loggedinUser.getUsername())){
+            ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, deleteLoggedUser);
+            if (res.size() == 1) {
+                if (db.deleteRecord(res.get(0))) {
+                    System.out.println(String.format("Din användarprofil: '%s' är raderad", deleteLoggedUser));
+                    loggedinUser = null;
+                    return true;
+                }
+                else
+                    System.out.print(String.format("Din användarprofil: '%s' kunde inte raderas", deleteLoggedUser));
+            } // if res...
+            else
+                System.out.println("Användaren finns inte");
+        }
+        else System.out.println("Inte ditt användarnamn!");
+        return false;
+    };// removeUserAsAdmin
 
     public void likeThisUser(Object o) {
 
