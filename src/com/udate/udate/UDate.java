@@ -1,7 +1,6 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
-import com.udate.fs.Table;
 import com.udate.udate.fs.*;
 import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.LocationMenu;
@@ -31,16 +30,6 @@ public class UDate {
         // run the main menu
         m.handleMenu();
     } // run
-
-    private void addHobbies() {
-    }
-
-    public void searchUser() {
-    }
-
-
-    private void editHobby() {
-    }
 
     public boolean loginUser() {
         Scanner scan = new Scanner(System.in);
@@ -394,12 +383,12 @@ public class UDate {
             if (res.size() == 1) {
                 Location locationRec = (Location)res.get(0);
 
-                System.out.printf("Ange namn på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getName());
+                System.out.printf("Ange namn på platsen [%s]: ", locationRec.getName());
                 String name = scan.nextLine();
                 if (!name.equals(""))
                     locationRec.setName(name);
 
-                System.out.printf("Ange addressen på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getAddress());
+                System.out.printf("Ange addressen på platsen [%s]: ", locationRec.getAddress());
                 String address = scan.nextLine();
                 if (!address.equals(""))
                     locationRec.setAddress(address);
@@ -432,17 +421,25 @@ public class UDate {
     }
 
     public void searchUser(Object o) {
-        Scanner scanny = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         System.out.print("Sök användarnamn: ");
-        String username = scanny.nextLine();
+        String username = scan.nextLine();
 
         ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
         if (result.size() > 0){
-            System.out.println(db.getResolvedData((User)result.get(0)));
+            System.out.println("\n"+db.getResolvedData((User)result.get(0)));
             ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
             pm.handleMenu();
         }
         System.out.println("\nHittade ingen vid detta användarnamn.");
+    }
+
+    public void viewMatches(Object o){
+        Matching a = new Matching(loggedinUser, (UserTable) db.getTable(UserTable.TABLE_NAME));
+        HashMap<User, Integer> matchingList = a.doMatch();
+        System.out.println("Matchnings-");
+        System.out.println("Rank          UserName");
+        matchingList.forEach((k, v) -> System.out.println((v) + "             " + k.getUsername()));
     }
 
     public void viewMyLikes(Object o) {
@@ -457,11 +454,7 @@ public class UDate {
                     System.out.println(userName);
                 }
             }
-
-        }else{
-            System.out.println("\nDu har inte gillat någon än");
-        }
-
+        } else {System.out.println("\nDu har inte gillat någon än"); }
     }
 
     private String getUserNameFromId(String id) {
@@ -501,5 +494,22 @@ public class UDate {
             System.out.println("\nIngen som inte du också har gillat, gillar dig än!\n");
         }
     }
+    public void listUsersInMyCity(Object o) {
+
+        ArrayList<Data> foundUsers = db.search(UserTable.TABLE_NAME, User.CITY, loggedinUser.getCity());
+
+        if (foundUsers.size() > 0) {
+            System.out.printf("%nHär är användare i din stad:%n");
+
+            for (Data up : foundUsers) {
+                String username = (((User) up).getUsername());
+                if(username != loggedinUser.getUsername())
+                System.out.println(username);
+            }
+            System.out.println();
+        } else System.out.printf("%nTyvärr hittade vi inga användare i din stad. Men UDate växer för varje dag!");
+    }
+
+
 } // class UDate
 

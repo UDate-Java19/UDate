@@ -1,10 +1,8 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
-import com.udate.udate.fs.HobbyTable;
-import com.udate.udate.fs.LocationTable;
-import com.udate.udate.fs.User;
-import com.udate.udate.fs.UserTable;
+import com.udate.udate.fs.*;
+
 import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toMap;
 
@@ -17,6 +15,7 @@ public class Matching {
     private static final int MATCHLIST_LIMIT = 10;
     User loggedUser;
     UserTable table;
+    private UDateDB db = new UDateDB();
 
 
 
