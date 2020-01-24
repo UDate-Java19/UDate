@@ -305,7 +305,7 @@ public class UDate {
         Like lp = loggedinUser.hasLikedMe(db, likedUser);
 
         if (lp != null) {
-            System.out.printf("%nDu har redan ♥ %s.%n", likedUser.getUsername());
+            System.out.printf("\nDu har redan ♥ %s.\n", likedUser.getUsername());
         } else {
 
             lp = likedUser.hasLikedMe(db, loggedinUser);
@@ -329,7 +329,7 @@ public class UDate {
             ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
             pm.handleMenu();
         }
-        System.out.printf("%nHittade ingen vid detta användarnamn.");
+        System.out.println("\nHittade ingen vid detta användarnamn.");
     }
 
     public void viewMatches(Object o){
@@ -339,12 +339,20 @@ public class UDate {
     }
 
     public void viewMyLikes(Object o) {
-        ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, User.ID, loggedinUser.getID());
+        String str = loggedinUser.getID();
+        ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, Like.USER_ID, str);
+        if(result.size() > 0 ){
+            System.out.println("listan e såhär lång: "+ result.size());
+            for (Data lp : result) {
+                if(((Like) lp).getLikedBack().equals("0")){
+                    String likedUserId = ((Like) lp).getLikedUserId();
+                    String userName = getUserNameFromId(likedUserId);
+                    System.out.println(userName);
+                }
+            }
 
-        for (Data lp : result) {
-            String likedUserId = ((Like) lp).getLikedUserId();
-            String userName = getUserNameFromId(likedUserId);
-            System.out.println(userName);
+        }else{
+            System.out.println("\nDu har inte gillat någon än");
         }
 
     }
@@ -352,6 +360,39 @@ public class UDate {
     private String getUserNameFromId(String id) {
         ArrayList<Data> user = db.search(UserTable.TABLE_NAME, User.ID,id);
         return ((User) user.get(0)).getUsername();
+    }
+
+    public void likeEachOther(Object o) {
+        ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, Like.LIKED_BACK, "1");
+        for (Data lp : result) {
+            String user1 = ((Like) lp).getLikedUserId();
+            String user2= ((Like) lp).getUserId();
+            if( user1.equals(loggedinUser.getID()) || user2.equals(loggedinUser.getID())){
+                System.out.printf("\n%s ♥ %s \n ",getUserNameFromId(user1), getUserNameFromId(user2));
+            }
+        }
+
+
+    }
+
+    public void viewWhoLikesMe(Object o) {
+        ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, Like.LIKES_USER_ID, loggedinUser.getID());
+        int likeCounter = 0;
+
+        if(result.size()>0){
+            System.out.println();
+            for (Data lp : result) {
+                if(((Like) lp).getLikedBack().equals("0")) {
+                    String userWhoLikedMe = ((Like) lp).getUserId();
+                    String userName = getUserNameFromId(userWhoLikedMe);
+                    System.out.println("♥" + userName);
+                    likeCounter++;
+                }
+            }
+        }
+        if(likeCounter ==0 ){
+            System.out.println("\nIngen som inte du också har gillat, gillar dig än!\n");
+        }
     }
 } // class UDate
 
