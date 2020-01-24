@@ -25,18 +25,13 @@ public class UDate {
         // run the main menu
         m.handleMenu();
     } // run
-
-    private void addLocations() {
-    }
-
+    
     private void addHobbies() {
     }
 
     private void searchUser() {
     }
 
-    private void deleteLocation() {
-    }
 
     private void editHobby() {
     }
