@@ -1,13 +1,22 @@
 package com.udate.udate.fs;
 import com.udate.fs.Data;
 
+import java.util.HashMap;
+
 public class Like extends Data {
 
-    public static final String USER_ID = "id";
+    public static final String USER_ID = "userId";
     public static final String LIKES_USER_ID = "likedUserId";
     public static final String LIKED_BACK = "likedBack";
 
     public Like(String fileName) {super(fileName); }
+
+    public Like(HashMap<String, String> hm){
+        super("");
+        setUserId(hm.get(USER_ID));
+        setLikedUserId(hm.get(LIKES_USER_ID));
+        setLikedBack(hm.get(LIKED_BACK));
+    } // Like
 
     public Like(String fileName, String userId, String likedUserId) {
         super(fileName);

@@ -4,6 +4,8 @@ package com.udate.udate.fs;
 import com.udate.fs.Data;
 import com.udate.fs.Table;
 
+import java.util.HashMap;
+
 public class HobbyTable extends Table {
 
     public final static String TABLE_NAME = "hobby";
@@ -15,6 +17,9 @@ public class HobbyTable extends Table {
     public Data createDataObject(String fileName) {
         return new Hobby(fileName);
     }
+
+    @Override
+    public Data createDataObject(HashMap<String, String> hm) {return new Hobby(hm); };
 
 //    public void addRecord(Hobby hobby){
 //        super.addRecord(hobby);

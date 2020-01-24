@@ -3,6 +3,8 @@ package com.udate.udate.fs;
 import com.udate.fs.Data;
 import com.udate.fs.Table;
 
+import java.util.HashMap;
+
 public class UserTable extends Table {
 
     public final static String TABLE_NAME = "user";
@@ -15,6 +17,9 @@ public class UserTable extends Table {
     public Data createDataObject(String fileName) {
         return new User(fileName);
     }
+
+    @Override
+    public Data createDataObject(HashMap<String, String> hm) {return new User(hm); };
 
     public boolean userNameExists(String userName){
         return search(User.USERNAME, userName).size() != 0;
