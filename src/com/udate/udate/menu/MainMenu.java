@@ -3,7 +3,6 @@ package com.udate.udate.menu;
 import com.udate.udate.UDate;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MainMenu extends Menu {
 
@@ -47,7 +46,7 @@ public class MainMenu extends Menu {
 
         userMenu.add(new MenuChoice("Hantera profil", '1', this::setMenu, userProfileMenu));
         userMenu.add(new MenuChoice("Hitta datingpartner", '2', this::setMenu, userListMenu));
-        userMenu.add(new MenuChoice("Se matchningar", '3', p::methodPlaceholder));
+        userMenu.add(new MenuChoice("Se matchningar", '3', p::viewMatches));
         userMenu.add(new MenuChoice("Se gilla-markeringar", '4', this::setMenu, userLikesMenu));
         userMenu.add(new MenuChoice("Logga ut", '0', this::logout, p));
 

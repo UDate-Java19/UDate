@@ -1,7 +1,6 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
-import com.udate.fs.Table;
 import com.udate.udate.fs.*;
 import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
@@ -30,16 +29,6 @@ public class UDate {
         // run the main menu
         m.handleMenu();
     } // run
-
-    private void addHobbies() {
-    }
-
-    public void searchUser() {
-    }
-
-
-    private void editHobby() {
-    }
 
     public boolean loginUser() {
         Scanner scan = new Scanner(System.in);
@@ -353,12 +342,12 @@ public class UDate {
             if (res.size() == 1) {
                 Location locationRec = (Location)res.get(0);
 
-                System.out.printf("Ange namn på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getName());
+                System.out.printf("Ange namn på platsen [%s]: ", locationRec.getName());
                 String name = scan.nextLine();
                 if (!name.equals(""))
                     locationRec.setName(name);
 
-                System.out.printf("Ange addressen på platsen [%s] (tom sträng behåller det gamla värdet): ", locationRec.getAddress());
+                System.out.printf("Ange addressen på platsen [%s]: ", locationRec.getAddress());
                 String address = scan.nextLine();
                 if (!address.equals(""))
                     locationRec.setAddress(address);
@@ -390,39 +379,41 @@ public class UDate {
         }
     }
 
-    public void
-    searchUser(Object o) {
-        Scanner scanny = new Scanner(System.in);
+    public void searchUser(Object o) {
+        Scanner scan = new Scanner(System.in);
         System.out.print("Sök användarnamn: ");
-        String username = scanny.nextLine();
+        String username = scan.nextLine();
 
         ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
         if (result.size() > 0){
-            System.out.println(db.getResolvedData((User)result.get(0)));
+            System.out.println("\n"+db.getResolvedData((User)result.get(0)));
             ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
             pm.handleMenu();
         }
         System.out.println("\nHittade ingen vid detta användarnamn.");
     }
 
+    public void viewMatches(Object o){
+        Matching a = new Matching(loggedinUser, (UserTable) db.getTable(UserTable.TABLE_NAME));
+        HashMap<User, Integer> matchingList = a.doMatch();
+        System.out.println("Matchnings-");
+        System.out.println("Rank          UserName");
+        matchingList.forEach((k, v) -> System.out.println((v) + "             " + k.getUsername()));
+    }
+
     public void viewMyLikes(Object o) {
         String str = loggedinUser.getID();
         ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, Like.USER_ID, str);
         if(result.size() > 0 ){
-            System.out.println();
+            System.out.println("listan e såhär lång: "+ result.size());
             for (Data lp : result) {
                 if(((Like) lp).getLikedBack().equals("0")){
                     String likedUserId = ((Like) lp).getLikedUserId();
                     String userName = getUserNameFromId(likedUserId);
-
-                    System.out.println("♥ "+userName);
+                    System.out.println(userName);
                 }
             }
-
-        }else{
-            System.out.println("\nDu har inte gillat någon än");
-        }
-
+        } else {System.out.println("\nDu har inte gillat någon än"); }
     }
 
     private String getUserNameFromId(String id) {
@@ -432,17 +423,12 @@ public class UDate {
 
     public void likeEachOther(Object o) {
         ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, Like.LIKED_BACK, "1");
-        if(result.size() > 0){
-            for (Data lp : result) {
-                String user1 = ((Like) lp).getLikedUserId();
-                String user2= ((Like) lp).getUserId();
-                if( user1.equals(loggedinUser.getID()) || user2.equals(loggedinUser.getID())){
-                    System.out.printf("\n%s ♥ %s \n ",getUserNameFromId(user1), getUserNameFromId(user2));
-                }
+        for (Data lp : result) {
+            String user1 = ((Like) lp).getLikedUserId();
+            String user2= ((Like) lp).getUserId();
+            if( user1.equals(loggedinUser.getID()) || user2.equals(loggedinUser.getID())){
+                System.out.printf("\n%s ♥ %s \n ",getUserNameFromId(user1), getUserNameFromId(user2));
             }
-
-        }else{
-            System.out.println("\n Hittar inga!\n");
         }
 
 
