@@ -52,7 +52,7 @@ public class MainMenu extends Menu {
         userMenu.add(new MenuChoice("Logga ut", '0', this::logout, p));
 
         userProfileMenu.add(new MenuChoice("Redigera", '1', p::editUser));
-//        userProfileMenu.add(new MenuChoice("Radera", '2', this::removeLoggedUser, p));
+        userProfileMenu.add(new MenuChoice("Radera", '2', this::removeLoggedUser, p));
         userProfileMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
 
         userListMenu.add(new MenuChoice("Sök användare", '1', p::searchUser, null));

@@ -302,27 +302,6 @@ public class UDate {
         else System.out.println("Inte ditt användarnamn!");
         return false;
     };// removeUser
-    public boolean removeLoggedUser(){
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Ange ditt användarnamn för att radera: ");
-        String deleteLoggedUser = scan.nextLine();
-        if (deleteLoggedUser.equals(loggedinUser.getUsername())){
-            ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, deleteLoggedUser);
-            if (res.size() == 1) {
-                if (db.deleteRecord(res.get(0))) {
-                    System.out.println(String.format("Din användarprofil: '%s' är raderad", deleteLoggedUser));
-                    loggedinUser = null;
-                    return true;
-                }
-                else
-                    System.out.print(String.format("Din användarprofil: '%s' kunde inte raderas", deleteLoggedUser));
-            } // if res...
-            else
-                System.out.println("Användaren finns inte");
-        }
-        else System.out.println("Inte ditt användarnamn!");
-        return false;
-    };// removeUser
 
     public void adminAddLocation(Object o) {
         Scanner scan = new Scanner(System.in);
