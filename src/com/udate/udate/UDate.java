@@ -405,12 +405,12 @@ public class UDate {
         String str = loggedinUser.getID();
         ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, Like.USER_ID, str);
         if(result.size() > 0 ){
-            System.out.println("listan e såhär lång: "+ result.size());
+            System.out.println();
             for (Data lp : result) {
                 if(((Like) lp).getLikedBack().equals("0")){
                     String likedUserId = ((Like) lp).getLikedUserId();
                     String userName = getUserNameFromId(likedUserId);
-                    System.out.println(userName);
+                    System.out.println("♥ " + userName);
                 }
             }
         } else {System.out.println("\nDu har inte gillat någon än"); }
