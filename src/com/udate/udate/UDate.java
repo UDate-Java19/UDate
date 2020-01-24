@@ -301,7 +301,8 @@ public class UDate {
         }
         else System.out.println("Inte ditt användarnamn!");
         return false;
-    };// removeUserAsAdmin
+    };// removeUser
+
     public void adminAddLocation(Object o) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Skriv en plats du vill lägga till: ");
@@ -369,6 +370,7 @@ public class UDate {
 
     public void methodPlaceholder(Object o) {
     }
+>>>>>>>>> Temporary merge branch 2
 
     public void likeThisUser(Object o) {
 
