@@ -1,6 +1,7 @@
 package com.udate.udate;
 
 import com.udate.fs.Data;
+import com.udate.fs.Table;
 import com.udate.udate.fs.*;
 import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
@@ -19,9 +20,9 @@ public class UDate {
     private User loggedinUser = null;
     private boolean adminOnline = false;
 
-   public UDate(){
+    public UDate() {
         m = new MainMenu(this);
-   }
+    }
 
     public void run() {
         // run the main menu
@@ -114,8 +115,8 @@ public class UDate {
         System.out.print("Var god att ange din ålder: ");
         String age = scan.nextLine();
 
-        User newUser= new  User(name, userName, city, email, "", gender, age);
-        if(!db.addRecord(newUser))
+        User newUser = new User(name, userName, city, email, "", gender, age);
+        if (!db.addRecord(newUser))
             System.out.println("Fel vid sparning av användare");
         else{
             if(createAsUser){
@@ -126,11 +127,11 @@ public class UDate {
             } //if boolean...
         } //else
         return false;
-   }
+    }
 
     public boolean loginAdmin() {
-       Scanner scan = new Scanner(System.in);
-       System.out.print("Vänligen ange admin-lösenordet: ");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Vänligen ange admin-lösenordet: ");
 //       Console con = System.console();
 //        if(con == null)
 //        {
@@ -138,19 +139,18 @@ public class UDate {
 //            return;
 //        }
 
-       String sPwd = scan.nextLine();
+        String sPwd = scan.nextLine();
 //        String sPwd = con.readPassword().toString();
-       if (sPwd.equals("12359")) {
-           adminOnline = true;
-           return true;
-       }
-       else{
-           System.out.println("Fel lösenord - stick och brinn!");
-           return false;
-       } // else
+        if (sPwd.equals("12359")) {
+            adminOnline = true;
+            return true;
+        } else {
+            System.out.println("Fel lösenord - stick och brinn!");
+            return false;
+        } // else
     } // loginAdmin
 
-    public void removeUserAsAdmin(Object o){
+    public void removeUserAsAdmin(Object o) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Ange ett användarnamn att radera: ");
         String deleteUser = scan.nextLine();
@@ -244,10 +244,9 @@ public class UDate {
         User likedUser = (User) o;
         Like lp = loggedinUser.hasLikedMe(db, likedUser);
 
-        if (lp != null){
+        if (lp != null) {
             System.out.printf("%nDu har redan ♥ %s.%n", likedUser.getUsername());
-        }
-        else {
+        } else {
 
             lp = likedUser.hasLikedMe(db, loggedinUser);
 
