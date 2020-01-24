@@ -4,6 +4,7 @@ import com.udate.fs.Data;
 import com.udate.fs.Table;
 import com.udate.udate.fs.*;
 import com.udate.udate.menu.HobbyMenu;
+import com.udate.udate.menu.LocationMenu;
 import com.udate.udate.menu.MainMenu;
 import com.udate.udate.menu.ProfileMenu;
 
@@ -49,11 +50,11 @@ public class UDate {
         ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, sUser);
         if (res.size() == 1) {
             loggedinUser = (User) res.get(0);
-            System.out.println(String.format("Välkommen %s!", loggedinUser.getName()));
+            System.out.printf("%nVälkommen %s!%n", loggedinUser.getName());
             return true;
         } // if res...
 
-        System.out.println("Hmm, du har nog skrivit fel användarnamn. Testa logga in igen");
+        System.out.println("Hmm, du har nog skrivit fel användarnamn. Testa att logga in igen");
         return false;
     } // loginUser
 
@@ -132,7 +133,7 @@ public class UDate {
             if (createAsUser){
                 loggedinUser = newUser;
                 showHobbyMenu();
-                System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
+                System.out.printf("%nHej %s! Välkommen till UDate", newUser.getName());
                 return true;
             } //if boolean...
         } //else
@@ -210,7 +211,6 @@ public class UDate {
             System.out.println("Användaren finns inte");
     } // removeUserAsAdmin
 
-
     public void addHobby(Object o){
         Scanner scan = new Scanner(System.in);
 
@@ -220,8 +220,11 @@ public class UDate {
         System.out.print("Beskriv hobbyn: ");
         String desc = scan.nextLine();
 
-        if (db.addRecord(new Hobby(name, desc, "")))
+        Hobby hobby = new Hobby(name, desc, "");
+        if (db.addRecord(hobby)){
+            new LocationMenu(this, hobby).handleMenu();
             System.out.println(String.format("'%s' har blivit tillagd!", name));
+        } // if db...
         else
             System.out.println("Kunde ej lägga till ny hobby!");
     } // addHobby
@@ -251,6 +254,45 @@ public class UDate {
             System.out.println("Hobbyn finns inte");
     } // deleteHobby
 
+    private void printSortedLocationList(){
+        Map<String, Data> sorted = SortLists.sortLocationListByName(db.getRecords(LocationTable.TABLE_NAME));
+        sorted.forEach((k, v) -> {
+            System.out.printf("%s%n---------------------%n", v);
+        });
+    } // printSortedLocationList
+
+    public void addLocationToHobby(Hobby hobby){
+        printSortedLocationList();
+        System.out.print("Välj en plats att lägga till: ");
+        Scanner scan  = new Scanner(System.in);
+        String location = scan.nextLine();
+        ArrayList<Data> res = db.search(LocationTable.TABLE_NAME, Location.NAME, location);
+        if (res.size() > 0) {
+            hobby.addLocation(res.get(0).getID());
+            hobby.save();
+        } else{
+            System.out.println("Hittar ej platsen!");
+        } // else
+    } // addLocationToHobby
+
+    public void removeLocationToHobby(Hobby hobby){
+        Scanner scan = new Scanner(System.in);
+        Hobby resolvedHobby = (Hobby)(db.getResolvedData(hobby));
+        System.out.println("Hobbyns nuvarande platser: " + resolvedHobby.getLocationList());
+
+        System.out.print("Välj plats att ta bort: ");
+        String location = scan.nextLine();
+        if (resolvedHobby.getLocationList().contains(location)) {
+            ArrayList<Data> res = db.search(LocationTable.TABLE_NAME, Location.NAME, location);
+            if (res.size() == 1) {
+                hobby.removeLocation(((Location)res.get(0)).getID());
+                hobby.save();
+            } // if res...
+        } else{
+            System.out.println("Den här platsen är inte tillagd till hobbyn (än)!");
+        } // else
+    } // removeLocationToHobby
+
     public void editHobby(Object o){
         printSortedHobbyList();
 
@@ -273,9 +315,8 @@ public class UDate {
             if (!desc.equals(""))
                 hobbyRec.setDescription(desc);
 
-//            showHobbyMenu();
-
             hobbyRec.save();
+            new LocationMenu(this, hobbyRec).handleMenu();
         } // if res...
         else
             System.out.println("Hobbyn finns inte");

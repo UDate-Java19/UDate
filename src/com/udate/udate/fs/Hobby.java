@@ -1,11 +1,5 @@
 package com.udate.udate.fs;
 
-/*
-Programmerat av Jan-Erik "Janis" Karlsson 2020-01-15
-Programmering i Java EMMJUH19, EC-Utbildning
-CopyLeft 2020 - JanInc
-*/
-
 import com.udate.fs.Data;
 
 import java.util.ArrayList;
@@ -22,8 +16,6 @@ public class Hobby extends Data {
     List<String> locations = new ArrayList<String>();
 
     public Hobby(String fileName) {super(fileName); }
-
-//    public Hobby(String folderName, String fileName) {super(folderName, fileName); }
 
     public Hobby(HashMap<String, String> hm){
         super("");
@@ -70,19 +62,28 @@ public class Hobby extends Data {
     }
 
     public void setLocations(String locations) {
+        locations = locations.replace("[", "").replace("]","").replace(" ", "");
         getData().put(Hobby.LOCATIONS, locations);
-        String[] split = locations.split(",");
-        this.locations = Arrays.asList(split);
-    }
+
+        if (!locations.equals("")) {
+            String[] split = locations.split(",");
+            this.locations = Arrays.asList(split);
+        } // if !locations...
+    } // setLocations
+
     public void addLocation(String location){
         locations.add(location);
-        getData().put(User.HOBBIES, locations.toString());
+        getData().put(Hobby.LOCATIONS, locations.toString().replace("[", "").replace("]","").replace(" ", ""));
     }
 
     public void removeLocation(String location){
         locations.remove(location);
-        getData().put(User.HOBBIES, locations.toString());
+        getData().put(Hobby.LOCATIONS, locations.toString().replace("[", "").replace("]","").replace(" ", ""));
     }
+
+    public List<String> getLocationList() {
+        return locations;
+    } // getLocationList
 
     @Override
     public String toString() {
