@@ -47,9 +47,9 @@ public class Location extends Data {
 
     @Override
     public String toString() {
-        return String.format( "Location{Name: %s, Address: %s}", getName(), getAddress());
-    }
-}
+        return String.format("Platsnamn: %s%nAdress: %s", getName(), getAddress());
+    } // toString
+} // class Location
 
 
 
