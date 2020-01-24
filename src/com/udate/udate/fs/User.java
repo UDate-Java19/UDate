@@ -159,12 +159,12 @@ public class User extends Data {
     public void likeBack(Like lp) {
 
         if ((lp.getLikedBack()).equals("1")){
-            System.out.println("%nNi ♥ redan varandra.%n");
+            System.out.println("\nNi ♥ redan varandra.\n");
         }
         else {
             lp.setLikedBack("1");
             lp.save();
-            System.out.println("%nNi ♥ varandra!%n");
+            System.out.println("\nNi ♥ varandra!\n");
         }
     }
 
