@@ -61,7 +61,7 @@ public class MainMenu extends Menu {
 
         userLikesMenu.add(new MenuChoice("Se vilka jag gillat", '1', p::viewMyLikes, null));
         userLikesMenu.add(new MenuChoice("Se vilka som gillar mig", '2', p::methodPlaceholder, null));
-        userLikesMenu.add(new MenuChoice("Vi gillar varandra! :)", '0', p::methodPlaceholder, null));
+        userLikesMenu.add(new MenuChoice("Vi gillar varandra! :)", '3', p::methodPlaceholder, null));
         userLikesMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
 
         currentMenu = mainMenu;

@@ -219,13 +219,11 @@ public class UDate {
 
     public void viewMyLikes(Object o) {
         ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, User.ID, loggedinUser.getID());
-        //ArrayList<String> likedUserList = new ArrayList<>();
 
         for (Data lp : result) {
             String likedUserId = ((Like) lp).getLikedUserId();
             String userName = getUserNameFromId(likedUserId);
             System.out.println(userName);
-//            likedUserList.add(likedUser);
         }
 
     }
