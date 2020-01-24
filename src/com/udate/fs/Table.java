@@ -95,8 +95,9 @@ abstract public class Table {
     public ArrayList<Data> search(String key, String value){
         ArrayList<Data> result = new ArrayList<>();
         dataMap.forEach((k, d) -> {
-           if( d.getData().containsKey(key) && d.getData().containsValue(value)){
-               result.add(d);
+           if( d.getData().containsKey(key))
+               if (d.getData().get(key).contains(value)){
+                   result.add(d);
            }
         });
         return result;
