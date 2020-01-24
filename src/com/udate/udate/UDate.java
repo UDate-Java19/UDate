@@ -358,12 +358,17 @@ public class UDate {
 
     public void likeEachOther(Object o) {
         ArrayList<Data> result = db.search(LikeTable.TABLE_NAME, Like.LIKED_BACK, "1");
-        for (Data lp : result) {
-            String user1 = ((Like) lp).getLikedUserId();
-            String user2= ((Like) lp).getUserId();
-            if( user1.equals(loggedinUser.getID()) || user2.equals(loggedinUser.getID())){
-                System.out.printf("\n%s ♥ %s \n ",getUserNameFromId(user1), getUserNameFromId(user2));
+        if(result.size() > 0){
+            for (Data lp : result) {
+                String user1 = ((Like) lp).getLikedUserId();
+                String user2= ((Like) lp).getUserId();
+                if( user1.equals(loggedinUser.getID()) || user2.equals(loggedinUser.getID())){
+                    System.out.printf("\n%s ♥ %s \n ",getUserNameFromId(user1), getUserNameFromId(user2));
+                }
             }
+
+        }else{
+            System.out.println("\n Hittar inga!\n");
         }
 
 
