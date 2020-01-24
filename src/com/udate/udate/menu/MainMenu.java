@@ -51,12 +51,12 @@ public class MainMenu extends Menu {
         userMenu.add(new MenuChoice("Se gilla-markeringar", '4', this::setMenu, userLikesMenu));
         userMenu.add(new MenuChoice("Logga ut", '0', this::logout, p));
 
-        userProfileMenu.add(new MenuChoice("Redigera", '1', p::methodPlaceholder));
-        userProfileMenu.add(new MenuChoice("Radera", '2', p::methodPlaceholder));
+        userProfileMenu.add(new MenuChoice("Redigera", '1', p::editUser));
+        userProfileMenu.add(new MenuChoice("Radera", '2', this::removeLoggedUser, p));
         userProfileMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
 
         userListMenu.add(new MenuChoice("Sök användare", '1', p::searchUser, null));
-        userListMenu.add(new MenuChoice("Lista användare i din stad", '2', p::methodPlaceholder, null));
+        userListMenu.add(new MenuChoice("Lista användare i din stad", '2', p::listUsersInMyCity, null));
         userListMenu.add(new MenuChoice("Tillbaka", '0', this::setMenu, userMenu));
 
         userLikesMenu.add(new MenuChoice("Se vilka jag gillat", '1', p::viewMyLikes, null));
@@ -97,4 +97,9 @@ public class MainMenu extends Menu {
         if (((UDate)o).loginUser())
             setMenu(userMenu);
     } // loginUser
+
+    private void removeLoggedUser(Object o){
+        if (((UDate)o).removeLoggedUser())
+            setMenu(mainMenu);
+    }
 } // class Menu

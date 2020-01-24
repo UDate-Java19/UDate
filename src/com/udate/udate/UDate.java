@@ -7,6 +7,8 @@ import com.udate.udate.menu.HobbyMenu;
 import com.udate.udate.menu.MainMenu;
 import com.udate.udate.menu.ProfileMenu;
 
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static java.util.Map.Entry.comparingByValue;
@@ -28,7 +30,7 @@ public class UDate {
         // run the main menu
         m.handleMenu();
     } // run
-    
+
     private void addHobbies() {
     }
 
@@ -51,7 +53,7 @@ public class UDate {
             return true;
         } // if res...
 
-        System.out.println("Fel lösenord - stick och brinn!");
+        System.out.println("Hmm, du har nog skrivit fel användarnamn. Testa logga in igen");
         return false;
     } // loginUser
 
@@ -66,9 +68,7 @@ public class UDate {
     } // logoutAdmin
 
     public void showHobbyMenu(){
-        HobbyMenu m = new HobbyMenu(this);
-
-        m.handleMenu();
+       new HobbyMenu(this).handleMenu();
     } // showHobbyMenu
 
     public void addHobbyToLoggedinUser(Object o){
@@ -86,7 +86,22 @@ public class UDate {
     } // addHobbyToLoggedinUser
 
     public void removeHobbyFromLoggedinUser(Object o){
+        Scanner scan = new Scanner(System.in);
+        User resolvedUser = (User)db.getResolvedData(loggedinUser);
 
+        System.out.println("Dina nuvarande hobbies: " + resolvedUser.getHobbyList());
+
+        System.out.print("Välj en hobby att ta bort: ");
+        String hobby = scan.nextLine();
+        if (resolvedUser.getHobbyList().contains(hobby)) {
+            ArrayList<Data> res = db.search(HobbyTable.TABLE_NAME, Hobby.NAME, hobby);
+            if (res.size() == 1) {
+                loggedinUser.removeHobby(((Hobby)res.get(0)).getID());
+                loggedinUser.save();
+            } // if res...
+        } else{
+            System.out.println("Du gillar inte denna hobby (än)!");
+        } // else
     } // removeHobbyFromLoggedinUser
 
     public boolean registerUser(boolean createAsUser) {
@@ -97,24 +112,24 @@ public class UDate {
         if (res.size() == 1) {
             System.out.println("Användarnamnet finns redan! Prova igen: ");
             return false;
-        }
+        } // if res...
 
-        System.out.print("Var god att ange ditt namn: ");
+        System.out.print("Var god ange ditt namn: ");
         String name = scan.nextLine();
-        System.out.print("Var god att ange din stad: ");
+        System.out.print("Var god ange din stad: ");
         String city = scan.nextLine();
-        System.out.print("Var god att ange din email: ");
+        System.out.print("Var god ange din email: ");
         String email = scan.nextLine();
-        System.out.print("Var god att ange ditt kön: ");
+        System.out.print("Var god ange ditt kön: ");
         String gender = scan.nextLine();
-        System.out.print("Var god att ange din ålder: ");
+        System.out.print("Var god ange din ålder: ");
         String age = scan.nextLine();
 
         User newUser = new User(name, userName, city, email, "", gender, age);
         if (!db.addRecord(newUser))
             System.out.println("Fel vid sparning av användare");
         else{
-            if(createAsUser){
+            if (createAsUser){
                 loggedinUser = newUser;
                 showHobbyMenu();
                 System.out.println(String.format("Hej %s! Välkommen till UDate", newUser.getName()));
@@ -122,7 +137,42 @@ public class UDate {
             } //if boolean...
         } //else
         return false;
-    }
+    } // registerUser
+
+    public void editUser(Object o){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println(db.getResolvedData(loggedinUser));
+
+        System.out.printf("Ange ditt namn [%s] (tom sträng behåller det gamla värdet): ", loggedinUser.getName());
+
+        String input = scan.nextLine();
+        if (!input.equals(""))
+            loggedinUser.setName(input);
+
+        System.out.printf("Ange din stad [%s] (tom sträng behåller det gamla värdet): ", loggedinUser.getCity());
+        input = scan.nextLine();
+        if (!input.equals(""))
+            loggedinUser.setCity(input);
+
+        System.out.printf("Ange din e-postadress [%s] (tom sträng behåller det gamla värdet): ", loggedinUser.getEmail());
+        input = scan.nextLine();
+        if (!input.equals(""))
+            loggedinUser.setEmail(input);
+
+        System.out.printf("Ange din ålder [%s] (tom sträng behåller det gamla värdet): ", loggedinUser.getAge());
+        input = scan.nextLine();
+        if (!input.equals(""))
+            loggedinUser.setAge(input);
+
+        System.out.printf("Ange ditt kön [%s] (tom sträng behåller det gamla värdet): ", loggedinUser.getGender());
+        input = scan.nextLine();
+        if (!input.equals(""))
+            loggedinUser.setGender(input);
+
+        loggedinUser.save();
+        showHobbyMenu();
+    } // editUser
 
     public boolean loginAdmin() {
         Scanner scan = new Scanner(System.in);
@@ -159,6 +209,7 @@ public class UDate {
         else
             System.out.println("Användaren finns inte");
     } // removeUserAsAdmin
+
 
     public void addHobby(Object o){
         Scanner scan = new Scanner(System.in);
@@ -211,7 +262,6 @@ public class UDate {
         if (res.size() == 1) {
             Hobby hobbyRec = (Hobby)res.get(0);
 
-//            Hobby resolvedData = db.getResolvedDataRaw(hobbyRec);
             System.out.printf("Ange namn på hobbyn [%s] (tom sträng behåller det gamla värdet): ", hobbyRec.getName());
 
             String name = scan.nextLine();
@@ -230,6 +280,28 @@ public class UDate {
         else
             System.out.println("Hobbyn finns inte");
     } // editHobby
+
+    public boolean removeLoggedUser(){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Ange ditt användarnamn för att radera: ");
+        String deleteLoggedUser = scan.nextLine();
+        if (deleteLoggedUser.equals(loggedinUser.getUsername())){
+            ArrayList<Data> res = db.search(UserTable.TABLE_NAME, User.USERNAME, deleteLoggedUser);
+            if (res.size() == 1) {
+                if (db.deleteRecord(res.get(0))) {
+                    System.out.println(String.format("Din användarprofil: '%s' är raderad", deleteLoggedUser));
+                    loggedinUser = null;
+                    return true;
+                }
+                else
+                    System.out.print(String.format("Din användarprofil: '%s' kunde inte raderas", deleteLoggedUser));
+            } // if res...
+            else
+                System.out.println("Användaren finns inte");
+        }
+        else System.out.println("Inte ditt användarnamn!");
+        return false;
+    };// removeUser
 
     public void adminAddLocation(Object o) {
         Scanner scan = new Scanner(System.in);
@@ -396,5 +468,22 @@ public class UDate {
             System.out.println("\nIngen som inte du också har gillat, gillar dig än!\n");
         }
     }
+    public void listUsersInMyCity(Object o) {
+
+        ArrayList<Data> foundUsers = db.search(UserTable.TABLE_NAME, User.CITY, loggedinUser.getCity());
+
+        if (foundUsers.size() > 0) {
+            System.out.printf("%nHär är användare i din stad:%n");
+
+            for (Data up : foundUsers) {
+                String username = (((User) up).getUsername());
+                if(username != loggedinUser.getUsername())
+                System.out.println(username);
+            }
+            System.out.println();
+        } else System.out.printf("%nTyvärr hittade vi inga användare i din stad. Men UDate växer för varje dag!");
+    }
+
+
 } // class UDate
 
