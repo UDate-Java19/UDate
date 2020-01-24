@@ -397,7 +397,7 @@ public class UDate {
 
         ArrayList <Data> result = db.search(UserTable.TABLE_NAME, User.USERNAME, username);
         if (result.size() > 0){
-            System.out.println(db.getResolvedData((User)result.get(0)));
+            System.out.println("\n"+db.getResolvedData((User)result.get(0)));
             ProfileMenu pm = new ProfileMenu(this, (User)result.get(0));
             pm.handleMenu();
         }
@@ -416,11 +416,7 @@ public class UDate {
                     System.out.println(userName);
                 }
             }
-
-        }else{
-            System.out.println("\nDu har inte gillat någon än");
-        }
-
+        } else {System.out.println("\nDu har inte gillat någon än"); }
     }
 
     private String getUserNameFromId(String id) {
