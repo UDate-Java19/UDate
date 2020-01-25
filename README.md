@@ -23,4 +23,7 @@ To set up the IDE with plantUML, go to File/Settings:<br/>
 
 You can download the plantUML language guide here: http://plantuml.com/guide
 
+Another (free) UML-tool:
+https://www.visual-paradigm.com/download/community.jsp
+
 
